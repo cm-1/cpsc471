@@ -2,7 +2,7 @@
 --
 -- Host: 127.0.0.1    Database: nodekb
 -- ------------------------------------------------------
--- Server version	8.0.13
+-- Server version 8.0.13
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -376,16 +376,6 @@ LOCK TABLES `Survey_Response` WRITE;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
-/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
-/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
-
--- Dump completed on 2018-11-27 18:51:01
-
 --
 -- Table structure for table `Caregiver_In`
 --
@@ -595,7 +585,7 @@ DROP TABLE IF EXISTS `Employee_Account`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `Employee_Account` (
-  `Username` varchar(45) NOT NULL COMMENT '17:04:09	SELECT * FROM Employee_Accounts LIMIT 0, 1000	Error Code: 1146. Table ''clinicdb.employee_accounts'' doesn''t exist	0.00064 sec\n',
+  `Username` varchar(45) NOT NULL COMMENT '17:04:09 SELECT * FROM Employee_Accounts LIMIT 0, 1000 Error Code: 1146. Table ''clinicdb.employee_accounts'' doesn''t exist 0.00064 sec\n',
   `Password` varchar(45) DEFAULT NULL,
   `Email` varchar(255) DEFAULT NULL,
   `Employee_ID` int(11) NOT NULL,
