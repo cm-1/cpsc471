@@ -1,13 +1,13 @@
--- MySQL dump 10.13  Distrib 8.0.13, for macos10.14 (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.9, for Win64 (x86_64)
 --
--- Host: 127.0.0.1    Database: nodekb
+-- Host: localhost    Database: clinicdb
 -- ------------------------------------------------------
--- Server version 8.0.13
+-- Server version	5.7.13-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
- SET NAMES utf8 ;
+/*!40101 SET NAMES utf8 */;
 /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
 /*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
@@ -16,38 +16,38 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `Answers`
+-- Table structure for table `answers`
 --
 
-DROP TABLE IF EXISTS `Answers`;
+DROP TABLE IF EXISTS `answers`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
-CREATE TABLE `Answers` (
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `answers` (
   `Healthcare_ID` int(11) NOT NULL,
   `Survey_ID` int(11) NOT NULL,
   `Date` date NOT NULL,
   `Score` int(11) NOT NULL,
   PRIMARY KEY (`Healthcare_ID`,`Survey_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `Answers`
+-- Dumping data for table `answers`
 --
 
-LOCK TABLES `Answers` WRITE;
-/*!40000 ALTER TABLE `Answers` DISABLE KEYS */;
-/*!40000 ALTER TABLE `Answers` ENABLE KEYS */;
+LOCK TABLES `answers` WRITE;
+/*!40000 ALTER TABLE `answers` DISABLE KEYS */;
+/*!40000 ALTER TABLE `answers` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `Appointment`
+-- Table structure for table `appointment`
 --
 
-DROP TABLE IF EXISTS `Appointment`;
+DROP TABLE IF EXISTS `appointment`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
-CREATE TABLE `Appointment` (
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `appointment` (
   `Employee_ID` int(11) NOT NULL,
   `Date` date NOT NULL,
   `Start_Time` time NOT NULL,
@@ -58,127 +58,379 @@ CREATE TABLE `Appointment` (
   `Dr_Private_Notes` varchar(155) DEFAULT NULL,
   `Amount_Owed` int(11) DEFAULT NULL,
   `Amount_Paid` int(11) DEFAULT NULL,
-  PRIMARY KEY (`Employee_ID`,`Date`,`Start_Time`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  PRIMARY KEY (`Employee_ID`,`Date`,`Start_Time`),
+  CONSTRAINT `appt_emp` FOREIGN KEY (`Employee_ID`) REFERENCES `psychologist` (`Employee_ID`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `Appointment`
+-- Dumping data for table `appointment`
 --
 
-LOCK TABLES `Appointment` WRITE;
-/*!40000 ALTER TABLE `Appointment` DISABLE KEYS */;
-/*!40000 ALTER TABLE `Appointment` ENABLE KEYS */;
+LOCK TABLES `appointment` WRITE;
+/*!40000 ALTER TABLE `appointment` DISABLE KEYS */;
+/*!40000 ALTER TABLE `appointment` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `Attends`
+-- Table structure for table `attends`
 --
 
-DROP TABLE IF EXISTS `Attends`;
+DROP TABLE IF EXISTS `attends`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
-CREATE TABLE `Attends` (
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `attends` (
   `Healthcare_ID` int(11) NOT NULL,
   `Employee_ID` int(11) NOT NULL,
   `Date` date NOT NULL,
   `Time` time NOT NULL,
-  PRIMARY KEY (`Healthcare_ID`,`Employee_ID`,`Date`,`Time`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  PRIMARY KEY (`Healthcare_ID`,`Employee_ID`,`Date`,`Time`),
+  KEY `attends_appt_idx` (`Employee_ID`,`Date`),
+  KEY `attends_appt` (`Employee_ID`,`Date`,`Time`),
+  CONSTRAINT `attends_appt` FOREIGN KEY (`Employee_ID`, `Date`, `Time`) REFERENCES `appointment` (`Employee_ID`, `Date`, `Start_Time`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `attends_patient` FOREIGN KEY (`Healthcare_ID`) REFERENCES `patient` (`Health_care_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `Attends`
+-- Dumping data for table `attends`
 --
 
-LOCK TABLES `Attends` WRITE;
-/*!40000 ALTER TABLE `Attends` DISABLE KEYS */;
-/*!40000 ALTER TABLE `Attends` ENABLE KEYS */;
+LOCK TABLES `attends` WRITE;
+/*!40000 ALTER TABLE `attends` DISABLE KEYS */;
+/*!40000 ALTER TABLE `attends` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `Emergency_Services`
+-- Table structure for table `caregiver_in`
 --
 
-DROP TABLE IF EXISTS `Emergency_Services`;
+DROP TABLE IF EXISTS `caregiver_in`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
-CREATE TABLE `Emergency_Services` (
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `caregiver_in` (
+  `Healthcare_ID` int(11) NOT NULL,
+  `Family_group_ID` int(11) NOT NULL,
+  PRIMARY KEY (`Healthcare_ID`,`Family_group_ID`),
+  KEY `carein_fg_idx` (`Family_group_ID`),
+  CONSTRAINT `carein_fg` FOREIGN KEY (`Family_group_ID`) REFERENCES `family_group` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `carein_patient` FOREIGN KEY (`Healthcare_ID`) REFERENCES `patient` (`Health_care_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `caregiver_in`
+--
+
+LOCK TABLES `caregiver_in` WRITE;
+/*!40000 ALTER TABLE `caregiver_in` DISABLE KEYS */;
+/*!40000 ALTER TABLE `caregiver_in` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `caregiver_of`
+--
+
+DROP TABLE IF EXISTS `caregiver_of`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `caregiver_of` (
+  `Caregiver_Id` int(11) NOT NULL,
+  `Child_Id` int(11) NOT NULL,
+  PRIMARY KEY (`Caregiver_Id`,`Child_Id`),
+  KEY `careof_child_idx` (`Child_Id`),
+  CONSTRAINT `careof_caregiver` FOREIGN KEY (`Caregiver_Id`) REFERENCES `patient` (`Health_care_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `careof_child` FOREIGN KEY (`Child_Id`) REFERENCES `patient` (`Health_care_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `caregiver_of`
+--
+
+LOCK TABLES `caregiver_of` WRITE;
+/*!40000 ALTER TABLE `caregiver_of` DISABLE KEYS */;
+/*!40000 ALTER TABLE `caregiver_of` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `client_account`
+--
+
+DROP TABLE IF EXISTS `client_account`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `client_account` (
+  `accountID` int(11) NOT NULL,
+  `healthcare_ID` int(11) DEFAULT NULL,
+  PRIMARY KEY (`accountID`),
+  KEY `clientAcc_hcid_idx` (`healthcare_ID`),
+  CONSTRAINT `clientAcc_hcid` FOREIGN KEY (`healthcare_ID`) REFERENCES `patient` (`Health_care_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `clientAcc_userAcc` FOREIGN KEY (`accountID`) REFERENCES `user_account` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `client_account`
+--
+
+LOCK TABLES `client_account` WRITE;
+/*!40000 ALTER TABLE `client_account` DISABLE KEYS */;
+/*!40000 ALTER TABLE `client_account` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `contact_info`
+--
+
+DROP TABLE IF EXISTS `contact_info`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `contact_info` (
+  `CI_ID` int(11) NOT NULL AUTO_INCREMENT,
+  `Title` varchar(5) DEFAULT NULL,
+  `Fname` varchar(255) DEFAULT NULL,
+  `Lname` varchar(255) DEFAULT NULL,
+  `Address` varchar(255) DEFAULT NULL,
+  `Email` varchar(254) DEFAULT NULL,
+  `Home_phone` varchar(15) DEFAULT NULL,
+  `Cell_phone` varchar(15) DEFAULT NULL,
+  PRIMARY KEY (`CI_ID`),
+  UNIQUE KEY `CI_ID_UNIQUE` (`CI_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `contact_info`
+--
+
+LOCK TABLES `contact_info` WRITE;
+/*!40000 ALTER TABLE `contact_info` DISABLE KEYS */;
+/*!40000 ALTER TABLE `contact_info` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `dependent_in`
+--
+
+DROP TABLE IF EXISTS `dependent_in`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `dependent_in` (
+  `Healthcare_id` int(11) NOT NULL,
+  `Family_Group_id` int(11) NOT NULL,
+  PRIMARY KEY (`Healthcare_id`),
+  KEY `dep_fg_idx` (`Family_Group_id`),
+  CONSTRAINT `dep_fg` FOREIGN KEY (`Family_Group_id`) REFERENCES `family_group` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `dep_patient` FOREIGN KEY (`Healthcare_id`) REFERENCES `patient` (`Health_care_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `dependent_in`
+--
+
+LOCK TABLES `dependent_in` WRITE;
+/*!40000 ALTER TABLE `dependent_in` DISABLE KEYS */;
+/*!40000 ALTER TABLE `dependent_in` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `diagnosis`
+--
+
+DROP TABLE IF EXISTS `diagnosis`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `diagnosis` (
+  `Healthcare_ID` int(11) NOT NULL,
+  `Diagnosis` varchar(255) NOT NULL,
+  PRIMARY KEY (`Healthcare_ID`,`Diagnosis`),
+  CONSTRAINT `diagnosis_patient` FOREIGN KEY (`Healthcare_ID`) REFERENCES `patient` (`Health_care_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `diagnosis`
+--
+
+LOCK TABLES `diagnosis` WRITE;
+/*!40000 ALTER TABLE `diagnosis` DISABLE KEYS */;
+/*!40000 ALTER TABLE `diagnosis` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `emergency_contacts`
+--
+
+DROP TABLE IF EXISTS `emergency_contacts`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `emergency_contacts` (
+  `Healthcare_ID` int(11) NOT NULL,
+  `CI_ID` int(11) NOT NULL,
+  `Relationship` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`Healthcare_ID`,`CI_ID`),
+  KEY `CI_ID_idx` (`CI_ID`),
+  CONSTRAINT `CI_ID2` FOREIGN KEY (`CI_ID`) REFERENCES `contact_info` (`CI_ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `Healthcare_ID2` FOREIGN KEY (`Healthcare_ID`) REFERENCES `patient` (`Health_care_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `emergency_contacts`
+--
+
+LOCK TABLES `emergency_contacts` WRITE;
+/*!40000 ALTER TABLE `emergency_contacts` DISABLE KEYS */;
+/*!40000 ALTER TABLE `emergency_contacts` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `emergency_services`
+--
+
+DROP TABLE IF EXISTS `emergency_services`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `emergency_services` (
   `ES_ID` int(11) NOT NULL,
   `Name` varchar(45) NOT NULL,
-  `Description` varchar(45) NOT NULL,
+  `Description` varchar(255) NOT NULL,
   `Type_Of_Service` varchar(45) NOT NULL,
-  `Location` varchar(45) DEFAULT NULL,
+  `Location` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`ES_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `Emergency_Services`
+-- Dumping data for table `emergency_services`
 --
 
-LOCK TABLES `Emergency_Services` WRITE;
-/*!40000 ALTER TABLE `Emergency_Services` DISABLE KEYS */;
-/*!40000 ALTER TABLE `Emergency_Services` ENABLE KEYS */;
+LOCK TABLES `emergency_services` WRITE;
+/*!40000 ALTER TABLE `emergency_services` DISABLE KEYS */;
+/*!40000 ALTER TABLE `emergency_services` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `Experiences`
+-- Table structure for table `employee`
 --
 
-DROP TABLE IF EXISTS `Experiences`;
+DROP TABLE IF EXISTS `employee`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
-CREATE TABLE `Experiences` (
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `employee` (
+  `Employee_ID` int(11) NOT NULL AUTO_INCREMENT,
+  `Start_Date` date NOT NULL,
+  `Job_Type` varchar(45) DEFAULT NULL,
+  `Status` varchar(45) NOT NULL,
+  `SSN` int(11) NOT NULL,
+  `CI_ID` int(11) NOT NULL,
+  PRIMARY KEY (`Employee_ID`),
+  UNIQUE KEY `Employee_ID_UNIQUE` (`Employee_ID`),
+  UNIQUE KEY `SSN_UNIQUE` (`SSN`),
+  KEY `emp_contact_idx` (`CI_ID`),
+  CONSTRAINT `emp_contact` FOREIGN KEY (`CI_ID`) REFERENCES `contact_info` (`CI_ID`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `employee`
+--
+
+LOCK TABLES `employee` WRITE;
+/*!40000 ALTER TABLE `employee` DISABLE KEYS */;
+/*!40000 ALTER TABLE `employee` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `employee_account`
+--
+
+DROP TABLE IF EXISTS `employee_account`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `employee_account` (
+  `accountID` int(11) NOT NULL COMMENT '17:04:09 SELECT * FROM Employee_Accounts LIMIT 0, 1000 Error Code: 1146. Table ''clinicdb.employee_accounts'' doesn''t exist 0.00064 sec\n',
+  `Employee_ID` int(11) NOT NULL,
+  PRIMARY KEY (`accountID`),
+  KEY `empAcc_empID_idx` (`Employee_ID`),
+  CONSTRAINT `empAcc_empID` FOREIGN KEY (`Employee_ID`) REFERENCES `employee` (`Employee_ID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `empAcc_userAcc` FOREIGN KEY (`accountID`) REFERENCES `user_account` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `employee_account`
+--
+
+LOCK TABLES `employee_account` WRITE;
+/*!40000 ALTER TABLE `employee_account` DISABLE KEYS */;
+/*!40000 ALTER TABLE `employee_account` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `experiences`
+--
+
+DROP TABLE IF EXISTS `experiences`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `experiences` (
   `Healthcare_ID` int(11) NOT NULL,
   `Date` date NOT NULL,
   `Time` time NOT NULL,
   `Employee_ID` int(11) NOT NULL,
-  PRIMARY KEY (`Healthcare_ID`,`Date`,`Time`,`Employee_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  PRIMARY KEY (`Healthcare_ID`,`Date`,`Time`,`Employee_ID`),
+  KEY `exp_emp_idx` (`Employee_ID`),
+  CONSTRAINT `exp_emp` FOREIGN KEY (`Employee_ID`) REFERENCES `psychologist` (`Employee_ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `exp_patient` FOREIGN KEY (`Healthcare_ID`) REFERENCES `patient` (`Health_care_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `Experiences`
+-- Dumping data for table `experiences`
 --
 
-LOCK TABLES `Experiences` WRITE;
-/*!40000 ALTER TABLE `Experiences` DISABLE KEYS */;
-/*!40000 ALTER TABLE `Experiences` ENABLE KEYS */;
+LOCK TABLES `experiences` WRITE;
+/*!40000 ALTER TABLE `experiences` DISABLE KEYS */;
+/*!40000 ALTER TABLE `experiences` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `Family_Group`
+-- Table structure for table `family_group`
 --
 
-DROP TABLE IF EXISTS `Family_Group`;
+DROP TABLE IF EXISTS `family_group`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
-CREATE TABLE `Family_Group` (
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `family_group` (
   `ID` int(11) NOT NULL,
   `Description` varchar(45) DEFAULT NULL,
-  `Assigned_Employee_ID` int(11) NOT NULL,
-  PRIMARY KEY (`ID`,`Assigned_Employee_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `Assigned_Employee_ID` int(11) DEFAULT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `fg_emp_idx` (`Assigned_Employee_ID`),
+  CONSTRAINT `fg_emp` FOREIGN KEY (`Assigned_Employee_ID`) REFERENCES `psychologist` (`Employee_ID`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `Family_Group`
+-- Dumping data for table `family_group`
 --
 
-LOCK TABLES `Family_Group` WRITE;
-/*!40000 ALTER TABLE `Family_Group` DISABLE KEYS */;
-/*!40000 ALTER TABLE `Family_Group` ENABLE KEYS */;
+LOCK TABLES `family_group` WRITE;
+/*!40000 ALTER TABLE `family_group` DISABLE KEYS */;
+/*!40000 ALTER TABLE `family_group` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `Incident`
+-- Table structure for table `incident`
 --
 
-DROP TABLE IF EXISTS `Incident`;
+DROP TABLE IF EXISTS `incident`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
-CREATE TABLE `Incident` (
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `incident` (
   `Employee_ID` int(11) NOT NULL,
   `Date` date NOT NULL,
   `Time` time NOT NULL,
@@ -186,479 +438,210 @@ CREATE TABLE `Incident` (
   `Severity` varchar(150) NOT NULL,
   `Category` varchar(20) NOT NULL,
   `Resolution` varchar(150) DEFAULT NULL,
-  PRIMARY KEY (`Employee_ID`,`Date`,`Time`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  PRIMARY KEY (`Employee_ID`,`Date`,`Time`),
+  CONSTRAINT `incident_emp` FOREIGN KEY (`Employee_ID`) REFERENCES `psychologist` (`Employee_ID`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `Incident`
+-- Dumping data for table `incident`
 --
 
-LOCK TABLES `Incident` WRITE;
-/*!40000 ALTER TABLE `Incident` DISABLE KEYS */;
-/*!40000 ALTER TABLE `Incident` ENABLE KEYS */;
+LOCK TABLES `incident` WRITE;
+/*!40000 ALTER TABLE `incident` DISABLE KEYS */;
+/*!40000 ALTER TABLE `incident` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `Informed_Of`
+-- Table structure for table `informed_of`
 --
 
-DROP TABLE IF EXISTS `Informed_Of`;
+DROP TABLE IF EXISTS `informed_of`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
-CREATE TABLE `Informed_Of` (
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `informed_of` (
   `Employee_ID` int(11) NOT NULL,
   `Date` date NOT NULL,
   `Time` time NOT NULL,
   `ES_ID` int(11) NOT NULL,
   PRIMARY KEY (`Employee_ID`,`Date`,`Time`,`ES_ID`),
   KEY `ES_ID_idx` (`ES_ID`),
-  CONSTRAINT `ES_ID` FOREIGN KEY (`ES_ID`) REFERENCES `emergency_services` (`es_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  CONSTRAINT `ES_ID` FOREIGN KEY (`ES_ID`) REFERENCES `emergency_services` (`ES_ID`),
+  CONSTRAINT `informed_incident` FOREIGN KEY (`Employee_ID`, `Date`, `Time`) REFERENCES `incident` (`Employee_ID`, `Date`, `Time`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `Informed_Of`
+-- Dumping data for table `informed_of`
 --
 
-LOCK TABLES `Informed_Of` WRITE;
-/*!40000 ALTER TABLE `Informed_Of` DISABLE KEYS */;
-/*!40000 ALTER TABLE `Informed_Of` ENABLE KEYS */;
+LOCK TABLES `informed_of` WRITE;
+/*!40000 ALTER TABLE `informed_of` DISABLE KEYS */;
+/*!40000 ALTER TABLE `informed_of` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `Medication`
+-- Table structure for table `medication`
 --
 
-DROP TABLE IF EXISTS `Medication`;
+DROP TABLE IF EXISTS `medication`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
-CREATE TABLE `Medication` (
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `medication` (
   `ID` int(11) NOT NULL,
   `med_id` varchar(10) NOT NULL,
   `name` varchar(45) NOT NULL,
   `man` varchar(45) NOT NULL,
   `use` varchar(45) NOT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `Medication`
+-- Dumping data for table `medication`
 --
 
-LOCK TABLES `Medication` WRITE;
-/*!40000 ALTER TABLE `Medication` DISABLE KEYS */;
-INSERT INTO `Medication` VALUES (1,'1238','cam','cam\'s parents','peanut allergy'),(2,'6969','sim','hogwarts','love potion'),(3,'omar','sim','cam','chris'),(4,'test','test','omar','sim'),(5,'1234','test','onetwo','omar'),(6,'54321','sim','chris','lindsay'),(7,'42069','weed','lindsay\'s house','stress'),(8,'6969','simran','cam','omar');
-/*!40000 ALTER TABLE `Medication` ENABLE KEYS */;
+LOCK TABLES `medication` WRITE;
+/*!40000 ALTER TABLE `medication` DISABLE KEYS */;
+INSERT INTO `medication` VALUES (1,'1238','cam','cam\'s parents','peanut allergy'),(2,'6969','sim','hogwarts','love potion'),(3,'omar','sim','cam','chris'),(4,'test','test','omar','sim'),(5,'1234','test','onetwo','omar'),(6,'54321','sim','chris','lindsay'),(7,'42069','weed','lindsay\'s house','stress'),(8,'6969','simran','cam','omar');
+/*!40000 ALTER TABLE `medication` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `Psychologist`
+-- Table structure for table `patient`
 --
 
-DROP TABLE IF EXISTS `Psychologist`;
+DROP TABLE IF EXISTS `patient`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
-CREATE TABLE `Psychologist` (
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `patient` (
+  `Health_care_id` int(11) NOT NULL,
+  `Birthdate` date NOT NULL,
+  `Sex` char(1) NOT NULL,
+  `CI_ID` int(11) NOT NULL,
+  PRIMARY KEY (`Health_care_id`),
+  KEY `patient_contact_idx` (`CI_ID`),
+  CONSTRAINT `patient_contact` FOREIGN KEY (`CI_ID`) REFERENCES `contact_info` (`CI_ID`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `patient`
+--
+
+LOCK TABLES `patient` WRITE;
+/*!40000 ALTER TABLE `patient` DISABLE KEYS */;
+/*!40000 ALTER TABLE `patient` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `psychologist`
+--
+
+DROP TABLE IF EXISTS `psychologist`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `psychologist` (
   `Employee_ID` int(11) NOT NULL,
-  `Facilitator_Flag` varchar(45) NOT NULL,
-  PRIMARY KEY (`Employee_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `Facilitator_Flag` tinyint(1) NOT NULL,
+  PRIMARY KEY (`Employee_ID`),
+  CONSTRAINT `psych_emp` FOREIGN KEY (`Employee_ID`) REFERENCES `employee` (`Employee_ID`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `Psychologist`
+-- Dumping data for table `psychologist`
 --
 
-LOCK TABLES `Psychologist` WRITE;
-/*!40000 ALTER TABLE `Psychologist` DISABLE KEYS */;
-/*!40000 ALTER TABLE `Psychologist` ENABLE KEYS */;
+LOCK TABLES `psychologist` WRITE;
+/*!40000 ALTER TABLE `psychologist` DISABLE KEYS */;
+/*!40000 ALTER TABLE `psychologist` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `Question`
+-- Table structure for table `qualifications`
 --
 
-DROP TABLE IF EXISTS `Question`;
+DROP TABLE IF EXISTS `qualifications`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
-CREATE TABLE `Question` (
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `qualifications` (
+  `Employee_ID` int(11) NOT NULL,
+  `Qualification` varchar(45) NOT NULL,
+  KEY `Employee_ID_idx` (`Employee_ID`),
+  CONSTRAINT `Employee_ID` FOREIGN KEY (`Employee_ID`) REFERENCES `psychologist` (`Employee_ID`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `qualifications`
+--
+
+LOCK TABLES `qualifications` WRITE;
+/*!40000 ALTER TABLE `qualifications` DISABLE KEYS */;
+/*!40000 ALTER TABLE `qualifications` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `question`
+--
+
+DROP TABLE IF EXISTS `question`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `question` (
   `Survey_ID` int(11) NOT NULL,
   `Number` varchar(45) NOT NULL,
   `Answer_format` varchar(45) NOT NULL,
   `Required` varchar(45) NOT NULL,
   `Prompt` varchar(45) NOT NULL,
   PRIMARY KEY (`Survey_ID`,`Number`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `Question`
+-- Dumping data for table `question`
 --
 
-LOCK TABLES `Question` WRITE;
-/*!40000 ALTER TABLE `Question` DISABLE KEYS */;
-/*!40000 ALTER TABLE `Question` ENABLE KEYS */;
+LOCK TABLES `question` WRITE;
+/*!40000 ALTER TABLE `question` DISABLE KEYS */;
+/*!40000 ALTER TABLE `question` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `Reason_Category`
+-- Table structure for table `reason_category`
 --
 
-DROP TABLE IF EXISTS `Reason_Category`;
+DROP TABLE IF EXISTS `reason_category`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
-CREATE TABLE `Reason_Category` (
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `reason_category` (
   `Employee_ID` int(11) NOT NULL,
   `Date` date NOT NULL,
   `Time` time NOT NULL,
   `Reason_Category` varchar(45) NOT NULL,
-  PRIMARY KEY (`Employee_ID`,`Date`,`Time`,`Reason_Category`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  PRIMARY KEY (`Employee_ID`,`Date`,`Time`,`Reason_Category`),
+  CONSTRAINT `reason_appt` FOREIGN KEY (`Employee_ID`, `Date`, `Time`) REFERENCES `appointment` (`Employee_ID`, `Date`, `Start_Time`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `Reason_Category`
+-- Dumping data for table `reason_category`
 --
 
-LOCK TABLES `Reason_Category` WRITE;
-/*!40000 ALTER TABLE `Reason_Category` DISABLE KEYS */;
-/*!40000 ALTER TABLE `Reason_Category` ENABLE KEYS */;
+LOCK TABLES `reason_category` WRITE;
+/*!40000 ALTER TABLE `reason_category` DISABLE KEYS */;
+/*!40000 ALTER TABLE `reason_category` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `Survey`
+-- Table structure for table `side_effect`
 --
 
-DROP TABLE IF EXISTS `Survey`;
+DROP TABLE IF EXISTS `side_effect`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
-CREATE TABLE `Survey` (
-  `ID` int(11) NOT NULL,
-  `Name` varchar(45) NOT NULL,
-  PRIMARY KEY (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `Survey`
---
-
-LOCK TABLES `Survey` WRITE;
-/*!40000 ALTER TABLE `Survey` DISABLE KEYS */;
-/*!40000 ALTER TABLE `Survey` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `Survey_Response`
---
-
-DROP TABLE IF EXISTS `Survey_Response`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
-CREATE TABLE `Survey_Response` (
-  `Survey_ID` int(11) NOT NULL,
-  `Healthcare_ID` int(11) NOT NULL,
-  `Date` date NOT NULL,
-  `Score` int(11) NOT NULL,
-  PRIMARY KEY (`Survey_ID`,`Healthcare_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `Survey_Response`
---
-
-LOCK TABLES `Survey_Response` WRITE;
-/*!40000 ALTER TABLE `Survey_Response` DISABLE KEYS */;
-/*!40000 ALTER TABLE `Survey_Response` ENABLE KEYS */;
-UNLOCK TABLES;
-/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
-
---
--- Table structure for table `Caregiver_In`
---
-
-DROP TABLE IF EXISTS `Caregiver_In`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
-CREATE TABLE `Caregiver_In` (
-  `Healthcare_ID` int(11) NOT NULL,
-  `Family_group_ID` varchar(45) NOT NULL,
-  PRIMARY KEY (`Healthcare_ID`,`Family_group_ID`),
-  CONSTRAINT `Healthcare_ID` FOREIGN KEY (`Healthcare_ID`) REFERENCES `Patient` (`Health_care_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `Caregiver_In`
---
-
-LOCK TABLES `Caregiver_In` WRITE;
-/*!40000 ALTER TABLE `Caregiver_In` DISABLE KEYS */;
-/*!40000 ALTER TABLE `Caregiver_In` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `Caregiver_Of`
---
-
-DROP TABLE IF EXISTS `Caregiver_Of`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
-CREATE TABLE `Caregiver_Of` (
-  `Caregiver_Id` int(11) NOT NULL,
-  `Child_Id` int(11) NOT NULL,
-  PRIMARY KEY (`Caregiver_Id`,`Child_Id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `Caregiver_Of`
---
-
-LOCK TABLES `Caregiver_Of` WRITE;
-/*!40000 ALTER TABLE `Caregiver_Of` DISABLE KEYS */;
-/*!40000 ALTER TABLE `Caregiver_Of` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `Client_Accounts`
---
-
-DROP TABLE IF EXISTS `Client_Accounts`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
-CREATE TABLE `Client_Accounts` (
-  `Username` varchar(45) NOT NULL,
-  `Password` varchar(45) NOT NULL,
-  `Email` varchar(255) NOT NULL,
-  PRIMARY KEY (`Username`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `Client_Accounts`
---
-
-LOCK TABLES `Client_Accounts` WRITE;
-/*!40000 ALTER TABLE `Client_Accounts` DISABLE KEYS */;
-/*!40000 ALTER TABLE `Client_Accounts` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `Contact_Info`
---
-
-DROP TABLE IF EXISTS `Contact_Info`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
-CREATE TABLE `Contact_Info` (
-  `CI_ID` int(11) NOT NULL AUTO_INCREMENT,
-  `Title` varchar(5) DEFAULT NULL,
-  `Fname` varchar(45) DEFAULT NULL,
-  `Lname` varchar(45) DEFAULT NULL,
-  `Address` varchar(45) DEFAULT NULL,
-  `Email` varchar(45) DEFAULT NULL,
-  `Home_phone` varchar(45) DEFAULT NULL,
-  `Cell_phone` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`CI_ID`),
-  UNIQUE KEY `CI_ID_UNIQUE` (`CI_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `Contact_Info`
---
-
-LOCK TABLES `Contact_Info` WRITE;
-/*!40000 ALTER TABLE `Contact_Info` DISABLE KEYS */;
-/*!40000 ALTER TABLE `Contact_Info` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `Dependent_In`
---
-
-DROP TABLE IF EXISTS `Dependent_In`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
-CREATE TABLE `Dependent_In` (
-  `Healthcare_id` int(11) NOT NULL,
-  `Family_Group_id` int(11) NOT NULL,
-  PRIMARY KEY (`Healthcare_id`),
-  CONSTRAINT `Health_Care_ID` FOREIGN KEY (`Healthcare_id`) REFERENCES `Patient` (`Health_care_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `Dependent_In`
---
-
-LOCK TABLES `Dependent_In` WRITE;
-/*!40000 ALTER TABLE `Dependent_In` DISABLE KEYS */;
-/*!40000 ALTER TABLE `Dependent_In` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `Diagnosis`
---
-
-DROP TABLE IF EXISTS `Diagnosis`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
-CREATE TABLE `Diagnosis` (
-  `Healthcare_ID` int(11) NOT NULL,
-  `Diagnosis` varchar(45) NOT NULL,
-  PRIMARY KEY (`Healthcare_ID`,`Diagnosis`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `Diagnosis`
---
-
-LOCK TABLES `Diagnosis` WRITE;
-/*!40000 ALTER TABLE `Diagnosis` DISABLE KEYS */;
-/*!40000 ALTER TABLE `Diagnosis` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `Emergency_Contacts`
---
-
-DROP TABLE IF EXISTS `Emergency_Contacts`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
-CREATE TABLE `Emergency_Contacts` (
-  `Healthcare_ID` int(11) NOT NULL,
-  `CI_ID` int(11) NOT NULL,
-  `Relationship` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`Healthcare_ID`,`CI_ID`),
-  KEY `CI_ID_idx` (`CI_ID`),
-  CONSTRAINT `CI_ID2` FOREIGN KEY (`CI_ID`) REFERENCES `Contact_Info` (`CI_ID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `Healthcare_ID2` FOREIGN KEY (`Healthcare_ID`) REFERENCES `Patient` (`Health_care_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `Emergency_Contacts`
---
-
-LOCK TABLES `Emergency_Contacts` WRITE;
-/*!40000 ALTER TABLE `Emergency_Contacts` DISABLE KEYS */;
-/*!40000 ALTER TABLE `Emergency_Contacts` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `Employee`
---
-
-DROP TABLE IF EXISTS `Employee`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
-CREATE TABLE `Employee` (
-  `Employee_ID` int(11) NOT NULL AUTO_INCREMENT,
-  `Start_Date` date NOT NULL,
-  `Job_Type` varchar(45) DEFAULT NULL,
-  `Status` varchar(45) NOT NULL,
-  PRIMARY KEY (`Employee_ID`),
-  UNIQUE KEY `Employee_ID_UNIQUE` (`Employee_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `Employee`
---
-
-LOCK TABLES `Employee` WRITE;
-/*!40000 ALTER TABLE `Employee` DISABLE KEYS */;
-/*!40000 ALTER TABLE `Employee` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `Employee_Account`
---
-
-DROP TABLE IF EXISTS `Employee_Account`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
-CREATE TABLE `Employee_Account` (
-  `Username` varchar(45) NOT NULL COMMENT '17:04:09 SELECT * FROM Employee_Accounts LIMIT 0, 1000 Error Code: 1146. Table ''clinicdb.employee_accounts'' doesn''t exist 0.00064 sec\n',
-  `Password` varchar(45) DEFAULT NULL,
-  `Email` varchar(255) DEFAULT NULL,
-  `Employee_ID` int(11) NOT NULL,
-  PRIMARY KEY (`Username`,`Employee_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `Employee_Account`
---
-
-LOCK TABLES `Employee_Account` WRITE;
-/*!40000 ALTER TABLE `Employee_Account` DISABLE KEYS */;
-/*!40000 ALTER TABLE `Employee_Account` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `Patient`
---
-
-DROP TABLE IF EXISTS `Patient`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
-CREATE TABLE `Patient` (
-  `Health_care_id` int(11) NOT NULL,
-  `Birthdate` date DEFAULT NULL,
-  `Sex` varchar(45) DEFAULT NULL,
-  `CI_ID` varchar(45) NOT NULL,
-  PRIMARY KEY (`Health_care_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `Patient`
---
-
-LOCK TABLES `Patient` WRITE;
-/*!40000 ALTER TABLE `Patient` DISABLE KEYS */;
-/*!40000 ALTER TABLE `Patient` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `Qualifications`
---
-
-DROP TABLE IF EXISTS `Qualifications`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
-CREATE TABLE `Qualifications` (
-  `Employee_ID` int(11) NOT NULL,
-  `Qualifications` varchar(45) NOT NULL,
-  PRIMARY KEY (`Employee_ID`,`Qualifications`),
-  CONSTRAINT `Employee_ID` FOREIGN KEY (`Employee_ID`) REFERENCES `Employee` (`Employee_ID`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `Qualifications`
---
-
-LOCK TABLES `Qualifications` WRITE;
-/*!40000 ALTER TABLE `Qualifications` DISABLE KEYS */;
-/*!40000 ALTER TABLE `Qualifications` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `Side_Effect`
---
-
-DROP TABLE IF EXISTS `Side_Effect`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
-CREATE TABLE `Side_Effect` (
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `side_effect` (
   `Med_ID` int(11) NOT NULL,
   `Side_Effect` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`Med_ID`)
@@ -666,22 +649,70 @@ CREATE TABLE `Side_Effect` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `Side_Effect`
+-- Dumping data for table `side_effect`
 --
 
-LOCK TABLES `Side_Effect` WRITE;
-/*!40000 ALTER TABLE `Side_Effect` DISABLE KEYS */;
-/*!40000 ALTER TABLE `Side_Effect` ENABLE KEYS */;
+LOCK TABLES `side_effect` WRITE;
+/*!40000 ALTER TABLE `side_effect` DISABLE KEYS */;
+/*!40000 ALTER TABLE `side_effect` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `Takes`
+-- Table structure for table `survey`
 --
 
-DROP TABLE IF EXISTS `Takes`;
+DROP TABLE IF EXISTS `survey`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
-CREATE TABLE `Takes` (
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `survey` (
+  `ID` int(11) NOT NULL,
+  `Name` varchar(45) NOT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `survey`
+--
+
+LOCK TABLES `survey` WRITE;
+/*!40000 ALTER TABLE `survey` DISABLE KEYS */;
+/*!40000 ALTER TABLE `survey` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `survey_response`
+--
+
+DROP TABLE IF EXISTS `survey_response`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `survey_response` (
+  `Survey_ID` int(11) NOT NULL,
+  `Healthcare_ID` int(11) NOT NULL,
+  `Date` date NOT NULL,
+  `Score` int(11) NOT NULL,
+  PRIMARY KEY (`Survey_ID`,`Healthcare_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `survey_response`
+--
+
+LOCK TABLES `survey_response` WRITE;
+/*!40000 ALTER TABLE `survey_response` DISABLE KEYS */;
+/*!40000 ALTER TABLE `survey_response` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `takes`
+--
+
+DROP TABLE IF EXISTS `takes`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `takes` (
   `Health_care_ID` int(11) NOT NULL,
   `Med_ID` int(11) NOT NULL,
   `Dosage` int(11) NOT NULL,
@@ -690,22 +721,22 @@ CREATE TABLE `Takes` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `Takes`
+-- Dumping data for table `takes`
 --
 
-LOCK TABLES `Takes` WRITE;
-/*!40000 ALTER TABLE `Takes` DISABLE KEYS */;
-/*!40000 ALTER TABLE `Takes` ENABLE KEYS */;
+LOCK TABLES `takes` WRITE;
+/*!40000 ALTER TABLE `takes` DISABLE KEYS */;
+/*!40000 ALTER TABLE `takes` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `Use`
+-- Table structure for table `use`
 --
 
-DROP TABLE IF EXISTS `Use`;
+DROP TABLE IF EXISTS `use`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
-CREATE TABLE `Use` (
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `use` (
   `Med_ID` int(11) NOT NULL,
   `Use` varchar(65) NOT NULL,
   PRIMARY KEY (`Med_ID`)
@@ -713,12 +744,40 @@ CREATE TABLE `Use` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `Use`
+-- Dumping data for table `use`
 --
 
-LOCK TABLES `Use` WRITE;
-/*!40000 ALTER TABLE `Use` DISABLE KEYS */;
-/*!40000 ALTER TABLE `Use` ENABLE KEYS */;
+LOCK TABLES `use` WRITE;
+/*!40000 ALTER TABLE `use` DISABLE KEYS */;
+/*!40000 ALTER TABLE `use` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `user_account`
+--
+
+DROP TABLE IF EXISTS `user_account`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `user_account` (
+  `Username` varchar(128) NOT NULL,
+  `Password` char(60) NOT NULL,
+  `Email` varchar(254) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `Email_UNIQUE` (`Email`),
+  UNIQUE KEY `Username_UNIQUE` (`Username`),
+  UNIQUE KEY `id_UNIQUE` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `user_account`
+--
+
+LOCK TABLES `user_account` WRITE;
+/*!40000 ALTER TABLE `user_account` DISABLE KEYS */;
+/*!40000 ALTER TABLE `user_account` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -730,5 +789,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-11-27 19:19:01
-
+-- Dump completed on 2018-11-28 18:42:16
