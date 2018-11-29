@@ -23,11 +23,16 @@ DROP TABLE IF EXISTS `answers`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `answers` (
-  `Healthcare_ID` int(11) NOT NULL,
   `Survey_ID` int(11) NOT NULL,
+  `Healthcare_ID` int(11) NOT NULL,
   `Date` date NOT NULL,
-  `Score` int(11) NOT NULL,
-  PRIMARY KEY (`Healthcare_ID`,`Survey_ID`)
+  `Question_Number` int(11) NOT NULL,
+  `Response` int(11) DEFAULT NULL,
+  PRIMARY KEY (`Survey_ID`,`Healthcare_ID`,`Date`,`Question_Number`),
+  KEY `answer_question_idx` (`Healthcare_ID`,`Question_Number`),
+  KEY `answer_question_idx1` (`Survey_ID`,`Question_Number`),
+  CONSTRAINT `answer_question` FOREIGN KEY (`Survey_ID`, `Question_Number`) REFERENCES `question` (`Survey_ID`, `Number`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `answer_survresp` FOREIGN KEY (`Survey_ID`, `Healthcare_ID`, `Date`) REFERENCES `survey_response` (`Survey_ID`, `Healthcare_ID`, `Date`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -489,10 +494,9 @@ DROP TABLE IF EXISTS `medication`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `medication` (
   `ID` int(11) NOT NULL,
-  `med_id` varchar(10) NOT NULL,
   `name` varchar(45) NOT NULL,
-  `man` varchar(45) NOT NULL,
-  `use` varchar(45) NOT NULL,
+  `manufacturer` varchar(45) NOT NULL,
+  `description` varchar(255) NOT NULL,
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -503,7 +507,7 @@ CREATE TABLE `medication` (
 
 LOCK TABLES `medication` WRITE;
 /*!40000 ALTER TABLE `medication` DISABLE KEYS */;
-INSERT INTO `medication` VALUES (1,'1238','cam','cam\'s parents','peanut allergy'),(2,'6969','sim','hogwarts','love potion'),(3,'omar','sim','cam','chris'),(4,'test','test','omar','sim'),(5,'1234','test','onetwo','omar'),(6,'54321','sim','chris','lindsay'),(7,'42069','weed','lindsay\'s house','stress'),(8,'6969','simran','cam','omar');
+INSERT INTO `medication` VALUES (1,'cam','cam\'s parents','peanut allergy'),(2,'sim','hogwarts','love potion'),(3,'sim','cam','chris'),(4,'test','omar','sim'),(5,'test','onetwo','omar'),(6,'sim','chris','lindsay'),(7,'weed','lindsay\'s house','stress'),(8,'simran','cam','omar');
 /*!40000 ALTER TABLE `medication` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -591,11 +595,12 @@ DROP TABLE IF EXISTS `question`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `question` (
   `Survey_ID` int(11) NOT NULL,
-  `Number` varchar(45) NOT NULL,
+  `Number` int(11) NOT NULL,
   `Answer_format` varchar(45) NOT NULL,
   `Required` varchar(45) NOT NULL,
   `Prompt` varchar(45) NOT NULL,
-  PRIMARY KEY (`Survey_ID`,`Number`)
+  PRIMARY KEY (`Survey_ID`,`Number`),
+  CONSTRAINT `question_survey` FOREIGN KEY (`Survey_ID`) REFERENCES `survey` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -643,8 +648,9 @@ DROP TABLE IF EXISTS `side_effect`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `side_effect` (
   `Med_ID` int(11) NOT NULL,
-  `Side_Effect` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`Med_ID`)
+  `Side_Effect` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`Med_ID`),
+  CONSTRAINT `se_med` FOREIGN KEY (`Med_ID`) REFERENCES `medication` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -692,7 +698,10 @@ CREATE TABLE `survey_response` (
   `Healthcare_ID` int(11) NOT NULL,
   `Date` date NOT NULL,
   `Score` int(11) NOT NULL,
-  PRIMARY KEY (`Survey_ID`,`Healthcare_ID`)
+  PRIMARY KEY (`Survey_ID`,`Healthcare_ID`,`Date`),
+  KEY `sr_patient_idx` (`Healthcare_ID`),
+  CONSTRAINT `sr_patient` FOREIGN KEY (`Healthcare_ID`) REFERENCES `patient` (`Health_care_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `sr_survey` FOREIGN KEY (`Survey_ID`) REFERENCES `survey` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -716,7 +725,10 @@ CREATE TABLE `takes` (
   `Health_care_ID` int(11) NOT NULL,
   `Med_ID` int(11) NOT NULL,
   `Dosage` int(11) NOT NULL,
-  PRIMARY KEY (`Med_ID`,`Health_care_ID`)
+  PRIMARY KEY (`Med_ID`,`Health_care_ID`),
+  KEY `takes_patient_idx` (`Health_care_ID`),
+  CONSTRAINT `takes_med` FOREIGN KEY (`Med_ID`) REFERENCES `medication` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `takes_patient` FOREIGN KEY (`Health_care_ID`) REFERENCES `patient` (`Health_care_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -739,7 +751,8 @@ DROP TABLE IF EXISTS `use`;
 CREATE TABLE `use` (
   `Med_ID` int(11) NOT NULL,
   `Use` varchar(65) NOT NULL,
-  PRIMARY KEY (`Med_ID`)
+  PRIMARY KEY (`Med_ID`),
+  CONSTRAINT `use_med` FOREIGN KEY (`Med_ID`) REFERENCES `medication` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -789,4 +802,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-11-28 18:42:16
+-- Dump completed on 2018-11-29 13:02:51
