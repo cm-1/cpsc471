@@ -13,12 +13,7 @@ const { matchedData, sanitize } = require('express-validator/filter');
 const flash = require('connect-flash');
 const session = require('express-session');
 
-//Connect to the database, store said connection in db variable
-/*let db = mysql.createConnection({
-host: "localhost",
-user: "root",
-password: "ZakVezThok888!", //Replace this with your root password for mysql
-database: "nodekb"});*/
+
 
 //init app
 const app = express();
