@@ -1,0 +1,69 @@
+"Node.js & Express From Scratch" - Traversy Media, 12 videos
+
+npm init
+	index.js -> app.js
+	test -> "start": "node app"
+
+npm start
+
+npm install --save express
+npm install --save pug
+
+npm install -g nodemon
+
+npm install --save mysql
+
+npm install --save body-parser
+
+Bower is a front-end package manager
+
+npm install -g bower
+
+npm install --save express-messages express-session connect-flash express-validator
+
+npm install --save passport passport-local bcryptjs
+
+Export/dump sql from workbench:
+	Server -> Data Export -> ...
+	
+Import sql from workbench:
+	Server -> Data Import -> ...
+	
+	npm WARN deprecated bower@1.8.4:
+	We don't recommend using Bower for new projects.
+	Please consider Yarn and Webpack or Parcel.
+	You can read how to migrate legacy project here:
+	https://bower.io/blog/2017/how-to-migrate-away-from-bower/
+
+
+Google "HTML to Jade"
+
+Only use the #{} "if you want to interpolate a variable in the contents of an element. you can just use the variable names straight up if you want to use them in attributes."
+	E.g.
+		h1=article.title
+			[Note that you can't have spaces around the '='!]
+		-versus-
+		h5 Written by #{article.author}
+		
+Custom js also goes under "Public" folder. Same with custom css.
+
+! Note that console.log in your client-side JS will only show up in the clieng-side console...
+Don't expect it to show up where your Node code is running.
+
+Delete should be done via ajax, rather than a link, because it's MUCH more secure!
+
+The middleware in the 8th video is outdated. See the video comments and my app.js file.
+
+router.get('/:id') has to be moved from the bottom, or else it will always be called first, and every path gets passed in as the id...
+
+Email should be Varchar(254) [255 is also FINE, but a tiny bit of a waste]
+
+For password column types: https://stackoverflow.com/questions/247304/what-data-type-to-use-for-hashed-password-field-and-what-length
+BUT, if we're using bcrypt, use BINARY(60) if "comparisons are done in MYSQL", CHAR(60) if they're done in the app.
+Following the tutorial (and saving ourselves headache), they'll be done in the app, so we use CHAR(60).
+
+req = request
+res = response
+
+Middleware order matters A LOT!
+https://stackoverflow.com/a/16781554
