@@ -93,7 +93,7 @@ router.get('/editaccount', function(req, res){
 				throw err;
 			} else {
 			//console.log(rows);
-				res.render('edit_account', {account:rows[0]});
+				res.render('edit_account', {email:rows[0].Email});
 			}
 		});
 	} else{
@@ -124,7 +124,7 @@ router.post('/editaccount', function(req, res){
 		let errors = req.validationErrors();
 
 		if(errors){
-			res.render('edit_account', {errors:errors});
+			res.render('edit_account', {errors:errors, email:email});
 		} else {
 			query = "UPDATE user_account SET ? WHERE ?";
 			//The structure for this one's more interesting...
@@ -150,7 +150,7 @@ router.post('/editaccount', function(req, res){
 		let errors = req.validationErrors();
 		
 		if(errors){
-			res.render('edit_account', {errors:errors});
+			res.render('edit_account', {errors:errors, email:email});
 		} else {
 			bcrypt.genSalt(10, function(err, salt){
 				bcrypt.hash(password, salt, function(err, hash){
