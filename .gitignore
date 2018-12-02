@@ -59,3 +59,7 @@ typings/
 
 # next.js build output
 .next
+
+# The database setup, so we don't need to keep changing things upon push/pull
+ClinicApp/clinicAppFiles/db.js
+
