@@ -85,6 +85,100 @@ router.post('/login', function(req, res, next){
 	
 });
 
+router.get('/editaccount', function(req, res){
+	if(req.user){
+		db.query("select Email from user_account where id = " + req.user.id, function (err, rows, fields){
+			if (err){
+				console.log(err);
+				throw err;
+			} else {
+			//console.log(rows);
+				res.render('edit_account', {account:rows[0]});
+			}
+		});
+	} else{
+		req.flash('danger', 'Not Logged In');
+		res.redirect('/');
+	}
+
+});
+
+router.post('/editaccount', function(req, res){
+	var query;
+	var userID = req.user.id;
+	var values;
+	
+	const email = req.body.email;
+	const password = req.body.password;
+	const password2 = req.body.password2;
+	
+	req.checkBody('email', 'Email is required').notEmpty();
+	req.checkBody('email', 'Email is not valid').isEmail();
+	
+	var hashedPassword;
+	console.log("\n\n! ! ! ! ! ! ! ! ! \nDuplicate user/email accounts check still needs fixing!!!!!\n= ==  =     = = =   =  =\n\n");
+	//! ! ! The "duplicate user" checking is currently broken!!!
+
+	
+	if (password == ''){
+		let errors = req.validationErrors();
+
+		if(errors){
+			res.render('edit_account', {errors:errors});
+		} else {
+			query = "UPDATE user_account SET ? WHERE ?";
+			//The structure for this one's more interesting...
+			//The first "object" in the array is the values to alter.
+			//The second "object" goes in the "WHERE"
+			values = [{ Email:email },
+				{id: userID}];
+				
+			db.query(query, values, function (err, result) {
+				if (err){
+					console.log(err);
+					throw err;
+				} else{
+					req.flash('success', 'Account Updated!');
+					res.redirect('/');
+				}
+			});
+		}
+		
+	} else {
+		req.checkBody('password', 'Password is required').notEmpty();
+		req.checkBody('password2', 'Passwords do not match').equals(req.body.password);
+		let errors = req.validationErrors();
+		
+		if(errors){
+			res.render('edit_account', {errors:errors});
+		} else {
+			bcrypt.genSalt(10, function(err, salt){
+				bcrypt.hash(password, salt, function(err, hash){
+					if (err) console.log(err);
+					console.log("! ! !" + hash);
+					hashedPassword = hash;
+					
+					query = "UPDATE user_account SET ? WHERE ?";
+					//The structure for this one's more interesting...
+					//The first "object" in the array is the values to alter.
+					//The second "object" goes in the "WHERE"
+					values = [{ Email:email, Password:hashedPassword },
+						{id: userID}];
+					db.query(query, values, function (err, result) {
+						if (err){
+							console.log(err);
+							throw err;
+						} else{
+							req.flash('success', 'Account Updated!');
+							res.redirect('/');
+						}
+					});
+				});
+			});
+		}
+	}
+});
+
 router.get('/logout', function(req, res){
 		//console.log(req);
 	req.logout();

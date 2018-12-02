@@ -83,7 +83,7 @@ router.post('/edit/:id', function(req, res){
 		}
 		console.log("# records inserted: " + result.affectedRows);
 	});
-})
+});
 
 function ensureAuthenticated(req, res, next){
 	if (req.isAuthenticated()){
