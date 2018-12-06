@@ -1,13 +1,13 @@
 doctype html
 html
 	head
-		title Knowledgebase
+		title Bert & Ernie's Depression Tank
 		link(rel='stylesheet' href='/bower_components/bootstrap/dist/css/bootstrap.css')
 		link(rel='stylesheet' href='/css/style.css')
 
 	body
 		nav.navbar.navbar-expand-md.navbar-dark.bg-dark
-			a.navbar-brand(href='#') KnowledgeBase
+			a.navbar-brand(href='#') Bert & Ernie's 
 			button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbarSupportedContent', aria-controls='navbarSupportedContent', aria-expanded='false', aria-label='Toggle navigation')
 				span.navbar-toggler-icon
 			#navbarSupportedContent.collapse.navbar-collapse
@@ -21,6 +21,9 @@ html
 					if user
 						li.nav-item
 							a.nav-link(href='/users/logout') Logout
+					if user
+						li.nav-item
+							a.nav-link(href='/medications/add') Add Medication
 					else
 						li.nav-item
 							a.nav-link(href='/users/register') Register
