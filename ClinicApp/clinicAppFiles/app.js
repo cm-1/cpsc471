@@ -82,7 +82,8 @@ app.use('/articles', articles);
 let users = require('./routes/users');
 app.use('/users', users);
 
-
+let medication = require('./routes/medication');
+app.use('/medications', medication);
 
 
 app.listen(3000, function(){
