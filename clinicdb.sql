@@ -15,56 +15,6 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
-
---
--- Table structure for table `question`
---
-
-DROP TABLE IF EXISTS `question`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `question` (
-  `Survey_ID` int(11) NOT NULL,
-  `Number` int(11) NOT NULL,
-  `Answer_format` varchar(45) NOT NULL,
-  `Required` varchar(45) NOT NULL,
-  `Prompt` varchar(45) NOT NULL,
-  PRIMARY KEY (`Survey_ID`,`Number`),
-  CONSTRAINT `question_survey` FOREIGN KEY (`Survey_ID`) REFERENCES `survey` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `question`
---
-
--- Table structure for table `survey_response`
---
-
-DROP TABLE IF EXISTS `survey_response`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `survey_response` (
-  `Survey_ID` int(11) NOT NULL,
-  `Healthcare_ID` int(11) NOT NULL,
-  `Date` date NOT NULL,
-  `Score` int(11) NOT NULL,
-  PRIMARY KEY (`Survey_ID`,`Healthcare_ID`,`Date`),
-  KEY `sr_patient_idx` (`Healthcare_ID`),
-  CONSTRAINT `sr_patient` FOREIGN KEY (`Healthcare_ID`) REFERENCES `patient` (`Health_care_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `sr_survey` FOREIGN KEY (`Survey_ID`) REFERENCES `survey` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `survey_response`
---
-
-LOCK TABLES `survey_response` WRITE;
-/*!40000 ALTER TABLE `survey_response` DISABLE KEYS */;
-/*!40000 ALTER TABLE `survey_response` ENABLE KEYS */;
-UNLOCK TABLES;
-
 --
 -- Table structure for table `answers`
 --
@@ -635,6 +585,29 @@ LOCK TABLES `qualifications` WRITE;
 /*!40000 ALTER TABLE `qualifications` DISABLE KEYS */;
 /*!40000 ALTER TABLE `qualifications` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Table structure for table `question`
+--
+
+DROP TABLE IF EXISTS `question`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `question` (
+  `Survey_ID` int(11) NOT NULL,
+  `Number` int(11) NOT NULL,
+  `Answer_format` varchar(45) NOT NULL,
+  `Required` varchar(45) NOT NULL,
+  `Prompt` varchar(45) NOT NULL,
+  PRIMARY KEY (`Survey_ID`,`Number`),
+  CONSTRAINT `question_survey` FOREIGN KEY (`Survey_ID`) REFERENCES `survey` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `question`
+--
+
 LOCK TABLES `question` WRITE;
 /*!40000 ALTER TABLE `question` DISABLE KEYS */;
 /*!40000 ALTER TABLE `question` ENABLE KEYS */;
@@ -713,6 +686,33 @@ LOCK TABLES `survey` WRITE;
 /*!40000 ALTER TABLE `survey` ENABLE KEYS */;
 UNLOCK TABLES;
 
+--
+-- Table structure for table `survey_response`
+--
+
+DROP TABLE IF EXISTS `survey_response`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `survey_response` (
+  `Survey_ID` int(11) NOT NULL,
+  `Healthcare_ID` int(11) NOT NULL,
+  `Date` date NOT NULL,
+  `Score` int(11) NOT NULL,
+  PRIMARY KEY (`Survey_ID`,`Healthcare_ID`,`Date`),
+  KEY `sr_patient_idx` (`Healthcare_ID`),
+  CONSTRAINT `sr_patient` FOREIGN KEY (`Healthcare_ID`) REFERENCES `patient` (`Health_care_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `sr_survey` FOREIGN KEY (`Survey_ID`) REFERENCES `survey` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `survey_response`
+--
+
+LOCK TABLES `survey_response` WRITE;
+/*!40000 ALTER TABLE `survey_response` DISABLE KEYS */;
+/*!40000 ALTER TABLE `survey_response` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `takes`
@@ -777,11 +777,12 @@ CREATE TABLE `user_account` (
   `Password` char(60) NOT NULL,
   `Email` varchar(254) NOT NULL,
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `Privilege_Level` char(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `Email_UNIQUE` (`Email`),
   UNIQUE KEY `Username_UNIQUE` (`Username`),
   UNIQUE KEY `id_UNIQUE` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -790,9 +791,9 @@ CREATE TABLE `user_account` (
 
 LOCK TABLES `user_account` WRITE;
 /*!40000 ALTER TABLE `user_account` DISABLE KEYS */;
+INSERT INTO `user_account` VALUES ('admin','$2a$10$k5J6wflc5a2wTdJ86ekH.O/ywTn/T94a3WUGloH8/wQxGTR1ffpi.','admin@email.com',1,'2');
 /*!40000 ALTER TABLE `user_account` ENABLE KEYS */;
 UNLOCK TABLES;
-
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -803,4 +804,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-11-29 13:02:51
+-- Dump completed on 2018-12-06 16:28:28
