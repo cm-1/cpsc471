@@ -1,0 +1,45 @@
+extends layout
+
+block content
+	h1 Your Information
+	form(method='POST', action='/infos/edit/'+info.patient.Health_care_id)
+		if info.Privilege_Level==0
+			#form-group
+				label Healthcare ID: 
+				input.form-control(name='health_care_id', type='text', value=info.patient.Health_care_id)
+			#form-group
+				label Sex: 
+				input.form-control(type="radio", name="sex", value="0", checked=gender=="0")
+				| Unknown
+				input.form-control(type="radio", name="sex", value="1", checked=gender=="1")
+				| Male
+				input.form-control(type="radio", name="sex", value="2", checked=gender=="2")
+				| Female
+				input.form-control(type="radio", name="sex", value="9", checked=gender=="9")
+				| N/A
+			#form-group
+				label Birthdate: 
+				input.form-control(type="date", name="birthdate" value =info.patient.Birthdate)
+		#form-group
+			label Name Title, If Any (Like "Dr."): 
+			input.form-control(name='title', type='text', value=info.ci.Title)
+		#form-group
+			label Given Name: 
+			input.form-control(name='fname', type='text', value=info.ci.Fname)
+		#form-group
+			label Family Name: 
+			input.form-control(name='lname', type='text', value=info.ci.Lname)
+		#form-group
+			label Address: 
+			input.form-control(name='address', type='text', value=info.ci.Address)
+		#form-group
+			label Email Address: 
+			input.form-control(name='email', type='email', value=info.ci.Email)
+		#form-group
+			label Home Phone: 
+			input.form-control(name='home_phone', type='text', value=info.ci.Home_phone)
+		#form-group
+			label Cell Phone: 
+			input.form-control(name='cell_phone', type='text', value=info.ci.Cell_phone)
+		br
+		input.btn.btn-primary(type='submit', value='Update')

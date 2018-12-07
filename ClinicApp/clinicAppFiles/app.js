@@ -64,7 +64,16 @@ app.set('view engine', 'pug');
 app.get('*', function(req, res, next){
 	//console.log(res);
 	res.locals.user = req.user || null;
-	next();
+	if (req.url === '/users/register' || req.url === '/users/login'){
+		console.log("Seems to get caught!");
+		next();
+	} else if (req.user){
+		next();
+	}
+	else {
+		req.flash('warning', 'Please Log In To Your Account');
+		res.redirect('/users/login');
+	}
 });
 
 app.get('/', function(req, res){
@@ -84,6 +93,9 @@ app.use('/users', users);
 
 let medication = require('./routes/medication');
 app.use('/medications', medication);
+
+let mymedical = require('./routes/mymedical');
+app.use('/mymedical', mymedical);
 
 let survey = require('./routes/survey');
 app.use('/survey', survey);
