@@ -1,6 +1,8 @@
 extends layout
 
 block content
-	h1 Default
-	p Fill this in later
-	
+	h1 Surveys
+	ul.list-group
+		each survey, i in surveys
+			li.list-group-item
+				a(href="/survey/view/") #{survey.id} - by #{survey.Name}
