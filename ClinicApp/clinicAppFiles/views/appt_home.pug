@@ -1,0 +1,32 @@
+extends layout
+
+
+
+block content
+
+
+		
+	h1 Your Appointments
+	
+	h2 Upcoming Appointment:
+	//-table-responsive
+	table(class="table table-bordered")
+		each upcoming, i in upcomings
+			tr.table-success
+				td #{upcoming.Date.getMonth( ) + 1 +'/'+ upcoming.Date.getDate( ) + '/' +upcoming.Date.getFullYear( )}
+				td #{upcoming.Time}
+				td #{upcoming.Duration} hour(s)
+				td #{upcoming.Lname}
+				td #{upcoming.Amount_Owed}
+				td #{upcoming.Amount_Paid}
+	
+	h2 Missed Appointments:
+	table
+	p {#numMissed}
+	each missed, i in misseds
+		tr
+			td #{missed.date}
+			td #{missed.time}
+			td #{missed.duration} hour(s)
+			td #{missed.psych}
+	
