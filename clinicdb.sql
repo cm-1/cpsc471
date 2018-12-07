@@ -780,11 +780,12 @@ CREATE TABLE `user_account` (
   `Password` char(60) NOT NULL,
   `Email` varchar(254) NOT NULL,
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `Privilege_Level` char(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `Email_UNIQUE` (`Email`),
   UNIQUE KEY `Username_UNIQUE` (`Username`),
   UNIQUE KEY `id_UNIQUE` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -793,7 +794,7 @@ CREATE TABLE `user_account` (
 
 LOCK TABLES `user_account` WRITE;
 /*!40000 ALTER TABLE `user_account` DISABLE KEYS */;
-INSERT INTO `user_account` VALUES ('yourname','$2a$10$2NUtaQznZUFHYFA2aVLtD.xNZic/zzZ9gwpTL4umrya7Au2e1GatS','sim@email.com',1),('simsims','$2a$10$nPxu08btTz1asvPL92HblekyEUnQdVpZTbyuFK.s1tx5n0i9sfPkm','simm@email.ca',4),('boy','$2a$10$lbrn3LNEXGBzZukLF4.j6eY38lgN0/HFvq4eEqcYpwRCYQCV/QiTG','boy@email.com',5);
+INSERT INTO `user_account` VALUES ('yourname','$2a$10$2NUtaQznZUFHYFA2aVLtD.xNZic/zzZ9gwpTL4umrya7Au2e1GatS','sim@email.com',1,'0'),('simsims','$2a$10$nPxu08btTz1asvPL92HblekyEUnQdVpZTbyuFK.s1tx5n0i9sfPkm','simm@email.ca',4,'0'),('boy','$2a$10$lbrn3LNEXGBzZukLF4.j6eY38lgN0/HFvq4eEqcYpwRCYQCV/QiTG','boy@email.com',5,'0'),('girl','$2a$10$R6iYncinRr8XYXE2ja1louIVy9NMZmTNxleSfYnSSEWv5r4oGcw1W','girl@email.com',6,'0'),('admin','$2a$10$NM26BuG.TXFjJNNYqUwP1O02SygWfoTYCqpGmOSMPNWxtl9Ft36ty','admin@email.com',7,'2'),('employee','$2a$10$ON0YQGi4Ze/KzLcHok8lcepqE0TW6z8JpVTNlGjpViNfQONVVeDNK','employee@email.com',8,'1');
 /*!40000 ALTER TABLE `user_account` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -806,4 +807,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-12-06 23:50:16
+-- Dump completed on 2018-12-07  2:06:07

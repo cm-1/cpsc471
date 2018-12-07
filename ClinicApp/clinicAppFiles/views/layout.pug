@@ -21,13 +21,14 @@ html
 							a.nav-link(href='/survey/view') Survey
 						li.nav-item
 							a.nav-link(href='/appointment/book_appt') Book Appointment
-						li.nav-item.dropdown
-							a#navbarDropdown.nav-link.dropdown-toggle(href='#', role='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false') Medication
-							.dropdown-menu(aria-labelledby='navbarDropdown')
-								a.dropdown-item(href='/medications/add') Add Medication
-								a.dropdown-item(href='/medications/delete') Delete Medication
-								//-.dropdown-divider
-								//-a.dropdown-item(href='#') Something else here
+						if user.Privilege_Level > 0
+							li.nav-item.dropdown
+								a#navbarDropdown.nav-link.dropdown-toggle(href='#', role='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false') Medication
+								.dropdown-menu(aria-labelledby='navbarDropdown')
+									a.dropdown-item(href='/medications/add') Add Medication
+									a.dropdown-item(href='/medications/delete') Delete Medication
+									//-.dropdown-divider
+									//-a.dropdown-item(href='#') Something else here
 				ul.navbar-nav.navbar-right
 					if user
 						li.nav-item.dropdown
