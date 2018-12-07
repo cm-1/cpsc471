@@ -1,13 +1,13 @@
--- MySQL dump 10.13  Distrib 5.7.9, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.13, for macos10.14 (x86_64)
 --
 -- Host: localhost    Database: clinicdb
 -- ------------------------------------------------------
--- Server version	5.7.13-log
+-- Server version	5.7.21
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
+ SET NAMES utf8 ;
 /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
 /*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
@@ -21,7 +21,7 @@
 
 DROP TABLE IF EXISTS `answers`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `answers` (
   `Survey_ID` int(11) NOT NULL,
   `Healthcare_ID` int(11) NOT NULL,
@@ -51,7 +51,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `appointment`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `appointment` (
   `Employee_ID` int(11) NOT NULL,
   `Date` date NOT NULL,
@@ -83,7 +83,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `attends`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `attends` (
   `Healthcare_ID` int(11) NOT NULL,
   `Employee_ID` int(11) NOT NULL,
@@ -112,7 +112,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `caregiver_in`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `caregiver_in` (
   `Healthcare_ID` int(11) NOT NULL,
   `Family_group_ID` int(11) NOT NULL,
@@ -138,7 +138,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `caregiver_of`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `caregiver_of` (
   `Caregiver_Id` int(11) NOT NULL,
   `Child_Id` int(11) NOT NULL,
@@ -164,7 +164,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `client_account`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `client_account` (
   `accountID` int(11) NOT NULL,
   `healthcare_ID` int(11) DEFAULT NULL,
@@ -190,7 +190,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `contact_info`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `contact_info` (
   `CI_ID` int(11) NOT NULL AUTO_INCREMENT,
   `Title` varchar(5) DEFAULT NULL,
@@ -202,7 +202,7 @@ CREATE TABLE `contact_info` (
   `Cell_phone` varchar(15) DEFAULT NULL,
   PRIMARY KEY (`CI_ID`),
   UNIQUE KEY `CI_ID_UNIQUE` (`CI_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -211,6 +211,7 @@ CREATE TABLE `contact_info` (
 
 LOCK TABLES `contact_info` WRITE;
 /*!40000 ALTER TABLE `contact_info` DISABLE KEYS */;
+INSERT INTO `contact_info` VALUES (1,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `contact_info` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -220,7 +221,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `dependent_in`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `dependent_in` (
   `Healthcare_id` int(11) NOT NULL,
   `Family_Group_id` int(11) NOT NULL,
@@ -246,7 +247,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `diagnosis`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `diagnosis` (
   `Healthcare_ID` int(11) NOT NULL,
   `Diagnosis` varchar(255) NOT NULL,
@@ -270,7 +271,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `emergency_contacts`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `emergency_contacts` (
   `Healthcare_ID` int(11) NOT NULL,
   `CI_ID` int(11) NOT NULL,
@@ -297,7 +298,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `emergency_services`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `emergency_services` (
   `ES_ID` int(11) NOT NULL,
   `Name` varchar(45) NOT NULL,
@@ -323,7 +324,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `employee`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `employee` (
   `Employee_ID` int(11) NOT NULL AUTO_INCREMENT,
   `Start_Date` date NOT NULL,
@@ -354,7 +355,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `employee_account`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `employee_account` (
   `accountID` int(11) NOT NULL COMMENT '17:04:09 SELECT * FROM Employee_Accounts LIMIT 0, 1000 Error Code: 1146. Table ''clinicdb.employee_accounts'' doesn''t exist 0.00064 sec\n',
   `Employee_ID` int(11) NOT NULL,
@@ -380,7 +381,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `experiences`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `experiences` (
   `Healthcare_ID` int(11) NOT NULL,
   `Date` date NOT NULL,
@@ -408,7 +409,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `family_group`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `family_group` (
   `ID` int(11) NOT NULL,
   `Description` varchar(45) DEFAULT NULL,
@@ -434,7 +435,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `incident`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `incident` (
   `Employee_ID` int(11) NOT NULL,
   `Date` date NOT NULL,
@@ -463,7 +464,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `informed_of`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `informed_of` (
   `Employee_ID` int(11) NOT NULL,
   `Date` date NOT NULL,
@@ -491,7 +492,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `medication`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `medication` (
   `ID` int(11) NOT NULL,
   `name` varchar(45) NOT NULL,
@@ -517,7 +518,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `patient`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `patient` (
   `Health_care_id` int(11) NOT NULL,
   `Birthdate` date NOT NULL,
@@ -544,7 +545,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `psychologist`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `psychologist` (
   `Employee_ID` int(11) NOT NULL,
   `Facilitator_Flag` tinyint(1) NOT NULL,
@@ -568,7 +569,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `qualifications`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `qualifications` (
   `Employee_ID` int(11) NOT NULL,
   `Qualification` varchar(45) NOT NULL,
@@ -592,11 +593,11 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `question`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `question` (
   `Survey_ID` int(11) NOT NULL,
   `Number` int(11) NOT NULL,
-  `Answer_format` varchar(45) NOT NULL,
+  `Answer_format` int(11) NOT NULL,
   `Required` varchar(45) NOT NULL,
   `Prompt` varchar(45) NOT NULL,
   PRIMARY KEY (`Survey_ID`,`Number`),
@@ -610,6 +611,7 @@ CREATE TABLE `question` (
 
 LOCK TABLES `question` WRITE;
 /*!40000 ALTER TABLE `question` DISABLE KEYS */;
+INSERT INTO `question` VALUES (1,1,5,'1','What is your age'),(1,2,5,'0','What is not your age?');
 /*!40000 ALTER TABLE `question` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -619,7 +621,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `reason_category`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `reason_category` (
   `Employee_ID` int(11) NOT NULL,
   `Date` date NOT NULL,
@@ -645,7 +647,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `side_effect`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `side_effect` (
   `Med_ID` int(11) NOT NULL,
   `Side_Effect` varchar(100) DEFAULT NULL,
@@ -669,7 +671,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `survey`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `survey` (
   `ID` int(11) NOT NULL,
   `Name` varchar(45) NOT NULL,
@@ -683,6 +685,7 @@ CREATE TABLE `survey` (
 
 LOCK TABLES `survey` WRITE;
 /*!40000 ALTER TABLE `survey` DISABLE KEYS */;
+INSERT INTO `survey` VALUES (1,'Survery');
 /*!40000 ALTER TABLE `survey` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -692,7 +695,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `survey_response`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `survey_response` (
   `Survey_ID` int(11) NOT NULL,
   `Healthcare_ID` int(11) NOT NULL,
@@ -720,7 +723,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `takes`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `takes` (
   `Health_care_ID` int(11) NOT NULL,
   `Med_ID` int(11) NOT NULL,
@@ -747,7 +750,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `use`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `use` (
   `Med_ID` int(11) NOT NULL,
   `Use` varchar(65) NOT NULL,
@@ -771,18 +774,17 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `user_account`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `user_account` (
   `Username` varchar(128) NOT NULL,
   `Password` char(60) NOT NULL,
   `Email` varchar(254) NOT NULL,
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `Privilege_Level` char(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `Email_UNIQUE` (`Email`),
   UNIQUE KEY `Username_UNIQUE` (`Username`),
   UNIQUE KEY `id_UNIQUE` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -791,7 +793,7 @@ CREATE TABLE `user_account` (
 
 LOCK TABLES `user_account` WRITE;
 /*!40000 ALTER TABLE `user_account` DISABLE KEYS */;
-INSERT INTO `user_account` VALUES ('admin','$2a$10$k5J6wflc5a2wTdJ86ekH.O/ywTn/T94a3WUGloH8/wQxGTR1ffpi.','admin@email.com',1,'2');
+INSERT INTO `user_account` VALUES ('yourname','$2a$10$2NUtaQznZUFHYFA2aVLtD.xNZic/zzZ9gwpTL4umrya7Au2e1GatS','sim@email.com',1),('simsims','$2a$10$nPxu08btTz1asvPL92HblekyEUnQdVpZTbyuFK.s1tx5n0i9sfPkm','simm@email.ca',4);
 /*!40000 ALTER TABLE `user_account` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -804,4 +806,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-12-06 16:28:28
+-- Dump completed on 2018-12-06 19:12:25
