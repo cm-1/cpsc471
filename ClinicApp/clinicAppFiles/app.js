@@ -71,7 +71,7 @@ app.get('*', function(req, res, next){
 		next();
 	}
 	else {
-		req.flash('warning', 'Please Log In To Your Account');
+		req.flash('warning', 'Please log in to your account.');
 		res.redirect('/users/login');
 	}
 });
@@ -94,8 +94,8 @@ app.use('/users', users);
 let medication = require('./routes/medication');
 app.use('/medications', medication);
 
-let mymedical = require('./routes/mymedical');
-app.use('/mymedical', mymedical);
+let myinfo = require('./routes/myinfo');
+app.use('/myinfo', myinfo);
 
 let survey = require('./routes/survey');
 app.use('/survey', survey);
