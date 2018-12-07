@@ -9,10 +9,12 @@ block content
             input.form-control(name='name', type='text')
         #form-group
             label Date:
-            input.form-control(name='date', type='date')
+            input.form-control(name='date', type='date', style="width:180px")
         #form-group
             label Time:
-            input.form-control(name='time', type='time')
+            br
+            input.form-control(name='time', type='number', min=9, max=17, style="width:80px; display:inline")
+            label  :00
         #form-group
             label Health Care ID:
             input.form-control(name='hcid', type='text')

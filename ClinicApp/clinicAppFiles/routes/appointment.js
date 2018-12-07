@@ -21,7 +21,8 @@ router.post('/book_appt', ensureAuthenticated, function(req, res) {
     req.checkBody('name', 'Name is required').notEmpty();
     req.checkBody('emName', 'Employee ID is required').notEmpty();
     req.checkBody('date', 'Date is required').notEmpty();
-    req.checkBody('time', 'time is required').notEmpty();
+    //req.checkBody('time', 'time is required').notEmpty();
+	console.log("TIME: " + time)
     
     /* Going off users.js, checking to see if the med_id is already in the table */ 
     let errors = req.validationErrors();
@@ -30,6 +31,7 @@ router.post('/book_appt', ensureAuthenticated, function(req, res) {
     } else {
         var query = "INSERT INTO attends (Healthcare_ID, Employee_ID, Date, Time) VALUES ?";
         var values = [[req.body.hcid, req.body.emName, req.body.date, req.body.time]];
+		console.log("VALUES: " + values);
         db.query(query, [values], function (err, result) {
             if (err) {
 				if (err.code == 'ER_DUP_ENTRY') {
@@ -43,6 +45,7 @@ router.post('/book_appt', ensureAuthenticated, function(req, res) {
 				res.redirect('/appointment/book_appt');
                
 				} else {
+					console.log(db.sql);
 					throw err;
 				}
 			} else {
