@@ -85,6 +85,9 @@ app.use('/users', users);
 let medication = require('./routes/medication');
 app.use('/medications', medication);
 
+let survey = require('./routes/survey');
+app.use('/survey', survey);
+
 
 app.listen(3000, function(){
 	console.log("Server started on port 3000...");
