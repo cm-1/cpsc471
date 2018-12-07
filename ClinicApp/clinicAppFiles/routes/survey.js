@@ -96,7 +96,7 @@ router.post('/view/:id', function(req, res){
 					var d = 1994-02-03;
 					console.log(q2);
 					/*
-					var entries = [[surveyInfo.ID, 1, '1994-03-09', 3]];
+					var entries = [[surveyInfo.ID, q2, '1994-03-09', 3]];
 					db.query(query2, [entries], function(err, results) {
 						if (err) throw err;
 						req.flash("success", "Info updated!");
