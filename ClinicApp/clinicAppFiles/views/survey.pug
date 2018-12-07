@@ -11,17 +11,22 @@ block content
 					span(style="whitespace:nowrap")
 						label Answer: 
 						br
-						input.form-check.form-check-inline(type="radio", name="q"+question.Number, value="1", style="margin-left:20px")
-						label.form-check-label 1
-						input.form-check.form-check-inline(type="radio", name="q"+question.Number, value="2", style="margin-left:20px")
-						label.form-check-label 2
-						input.form-check.form-check-inline(type="radio", name="q"+question.Number, value="3", style="margin-left:20px")
-						label.form-check-label 3
-						input.form-check.form-check-inline(type="radio", name="q"+question.Number, value="4", style="margin-left:20px")
-						label.form-check-label 4
-						input.form-check.form-check-inline(type="radio", name="q"+question.Number, value="5", style="margin-left:20px")
-						label.form-check-label 5
-						input.form-check.form-check-inline(type="radio", name="q"+question.Number, value="6", style="margin-left:20px")
+						input.form-check.form-check-inline(type="radio", name="q"+question.Number, id="q"+question.Number+"_"+1, value="1", style="margin-left:20px")
+						br
+						label(for="q"+question.Number.form-check-label 1
+						input.form-check.form-check-inline(type="radio", name="q"+question.Number, id="q"+question.Number+"_"+2, value="2", style="margin-left:20px")
+						br
+						label(for="q"+question.Number.form-check-label 2
+						input.form-check.form-check-inline(type="radio", name="q"+question.Number, id="q"+question.Number+"_"+3, value="3", style="margin-left:20px")
+						br
+						label(for="q"+question.Number.form-check-label 3
+						input.form-check.form-check-inline(type="radio", name="q"+question.Number, id="q"+question.Number+"_"+4, value="4", style="margin-left:20px")
+						br
+						label(for="q"+question.Number.form-check-label 4
+						input.form-check.form-check-inline(type="radio", name="q"+question.Number, id="q"+question.Number+"_"+5, value="5", style="margin-left:20px")
+						br
+						label(for="q"+question.Number.form-check-label 5
+						input.form-check.form-check-inline(type="radio", name="q"+question.Number, id="q"+question.Number+"_"+6, value="6", style="margin-left:20px")
 				//-a.btn.btn-default(href='/articles/edit/'+article.id) Edit
 				//-a.btn.btn-danger.delete-article(href="#", data-id=article.id) Delete
 	
