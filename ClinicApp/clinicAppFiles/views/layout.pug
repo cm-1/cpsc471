@@ -16,22 +16,23 @@ html
 						a.nav-link(href='/') Home
 					if user
 						li.nav-item
-							a.nav-link(href='/articles/add') Add Articles
-				ul.navbar-nav.navbar-right
-					if user
-						li.nav-item
-							a.nav-link(href='/users/logout') Logout
-					if user
-
+							a.nav-link(href='/survey/view') Survey
 						li.nav-item
 							a.nav-link(href='/appointment/book_appt') Book Appointment
-						li.nav-item
-							a.nav-link(href='/medications/add') Add Medication
-						li.nav-item
-							a.nav-link(href='/users/editaccount') Edit
-						li.nav-item
-							a.nav-link(href='/survey/view') Survey
-							a.nav-link(href='/medications/delete') Delete Medication
+						li.nav-item.dropdown
+							a#navbarDropdown.nav-link.dropdown-toggle(href='#', role='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false') Medication
+							.dropdown-menu(aria-labelledby='navbarDropdown')
+								a.dropdown-item(href='/medications/add') Add Medication
+								a.dropdown-item(href='/medications/delete') Delete Medication
+								//-.dropdown-divider
+								//-a.dropdown-item(href='#') Something else here
+				ul.navbar-nav.navbar-right
+					if user
+						li.nav-item.dropdown
+							a#navbarDropdown.nav-link.dropdown-toggle(href='#', role='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false') My Account
+							.dropdown-menu(aria-labelledby='navbarDropdown')
+								a.dropdown-item(href='/users/logout') Logout
+								a.dropdown-item(href='/users/editaccount') Edit Account
 
 					else
 						li.nav-item
