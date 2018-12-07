@@ -30,7 +30,7 @@ router.post('/register', function(req, res){
 	var userExists = false;
 	var emailExists = false;
 	
-	console.log("\n\n! ! ! ! ! ! ! ! ! \nDuplicate user/email accounts check still needs fixing!!!!!\n= ==  =     = = =   =  =\n\n");
+	/*console.log("\n\n! ! ! ! ! ! ! ! ! \nDuplicate user/email accounts check still needs fixing!!!!!\n= ==  =     = = =   =  =\n\n");
 	//! ! ! The "duplicate user" checking is currently broken!!!
 	db.query("select * from user_account where username = \"" + username + "\";", function (err, rows, fields){
 		if (err){
@@ -48,7 +48,7 @@ router.post('/register', function(req, res){
 	});
 	
 	if (userExists) errors.push(new Error("Username already exists."));
-	if (emailExists) errors.push(new Error("Email already exists."));
+	if (emailExists) errors.push(new Error("Email already exists."));*/
 	
 	if(errors){
 		res.render('register', {errors:errors});
@@ -63,13 +63,28 @@ router.post('/register', function(req, res){
 				var values = [[username, email, hashedPassword]];
 				db.query(query, [values], function (err, result) {
 					if (err){
-						console.log(err);
+						if (err.code == 'ER_DUP_ENTRY'){
+							var msg = "Error: Username '" + username + "' is already in use!";
+							if(err.message.indexOf("for key 'Email_UNIQUE'") > 0){
+								msg = "Error: Email address '" + email + "' is already in use!";
+							}
+							console.log("Well, there's a duplicate!");
+							req.flash('danger', msg);
+							res.redirect('/users/register');
+						}
+						else{
+							console.log(err);
 						throw err;
+						}
+						
 					} else{
+						console.log("# records inserted: " + result.affectedRows);
+
 						req.flash('success', 'Account Created!');
+
 						res.redirect('/users/login');
+						
 					}
-					console.log("# records inserted: " + result.affectedRows);
 				});
 			});
 		});
@@ -135,9 +150,19 @@ router.post('/editaccount', function(req, res){
 				
 			db.query(query, values, function (err, result) {
 				if (err){
-					console.log(err);
-					throw err;
-				} else{
+						if (err.code == 'ER_DUP_ENTRY'){
+							var msg = "Error: Email address '" + email + "' is already in use!";
+							
+							console.log("Well, there's a duplicate!");
+							req.flash('danger', msg);
+							res.redirect('/users/editaccount');
+						}
+						else{
+							console.log(err);
+						throw err;
+						}
+						
+					} else{
 					req.flash('success', 'Account Updated!');
 					res.redirect('/');
 				}
