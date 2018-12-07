@@ -2,10 +2,11 @@ extends layout
 
 block content
 
+
 	ul.list-group
 		each med, i in medication
 			li.list-group-item
-				a(href="/medications/delete") ID: #{med.ID}  Name: #{med.name} Manufacturer: #{med.manufacturer} Description: #{med.description}
+				Medication ID: #{med.ID}  Name: #{med.name} Manufacturer: #{med.manufacturer} Description: #{med.description}
 
 	br
 	br
