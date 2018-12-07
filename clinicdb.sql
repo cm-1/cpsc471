@@ -74,6 +74,7 @@ CREATE TABLE `appointment` (
 
 LOCK TABLES `appointment` WRITE;
 /*!40000 ALTER TABLE `appointment` DISABLE KEYS */;
+INSERT INTO `appointment` VALUES (1,'2012-12-12','11:00:00',1,'Crushing deadlines',0,NULL,NULL,100,0);
 /*!40000 ALTER TABLE `appointment` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -181,6 +182,7 @@ CREATE TABLE `client_account` (
 
 LOCK TABLES `client_account` WRITE;
 /*!40000 ALTER TABLE `client_account` DISABLE KEYS */;
+INSERT INTO `client_account` VALUES (5,11);
 /*!40000 ALTER TABLE `client_account` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -202,7 +204,7 @@ CREATE TABLE `contact_info` (
   `Cell_phone` varchar(15) DEFAULT NULL,
   PRIMARY KEY (`CI_ID`),
   UNIQUE KEY `CI_ID_UNIQUE` (`CI_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -211,7 +213,7 @@ CREATE TABLE `contact_info` (
 
 LOCK TABLES `contact_info` WRITE;
 /*!40000 ALTER TABLE `contact_info` DISABLE KEYS */;
-INSERT INTO `contact_info` VALUES (1,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+INSERT INTO `contact_info` VALUES (1,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2,'Dr','Lucas','King','177 Streetville Drive','1@email.com','(403) 555-5555','(403) 555-5555'),(3,'Dr','A','B','C','d@email.com','444','444'),(4,'dr','a','b','c','d@email.com','4','4'),(5,'a','b','c','d','e@email.com','f','g'),(6,'a','b','c','d','e@email.com','4','4'),(7,'dr','a','b','c','d@email.com','4','444'),(8,'Dr','f','g','a','g@notakemail.com','4','4'),(9,'dr','mario','','a','b@email.com','c','d'),(10,'dr','family','given','dressad','address@address.com','5','5'),(11,'dr','a','b','a','address@address.com','403','40'),(12,'Dr','Phil','Williamson','181 Arcane Grove','will@notemail.com','(403) 555-5555','(403) 555-5555');
 /*!40000 ALTER TABLE `contact_info` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -337,7 +339,7 @@ CREATE TABLE `employee` (
   UNIQUE KEY `SSN_UNIQUE` (`SSN`),
   KEY `emp_contact_idx` (`CI_ID`),
   CONSTRAINT `emp_contact` FOREIGN KEY (`CI_ID`) REFERENCES `contact_info` (`CI_ID`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -346,6 +348,7 @@ CREATE TABLE `employee` (
 
 LOCK TABLES `employee` WRITE;
 /*!40000 ALTER TABLE `employee` DISABLE KEYS */;
+INSERT INTO `employee` VALUES (1,'2018-07-07','Employee','Active',111111111,12);
 /*!40000 ALTER TABLE `employee` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -536,6 +539,7 @@ CREATE TABLE `patient` (
 
 LOCK TABLES `patient` WRITE;
 /*!40000 ALTER TABLE `patient` DISABLE KEYS */;
+INSERT INTO `patient` VALUES (1,'2018-12-05','1',4),(2,'2018-12-04','1',6),(3,'2018-12-12','1',7),(4,'2018-12-11','1',8),(5,'2018-12-12','1',9),(6,'2018-12-04','1',10),(11,'2018-12-11','1',11);
 /*!40000 ALTER TABLE `patient` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -560,6 +564,7 @@ CREATE TABLE `psychologist` (
 
 LOCK TABLES `psychologist` WRITE;
 /*!40000 ALTER TABLE `psychologist` DISABLE KEYS */;
+INSERT INTO `psychologist` VALUES (1,0);
 /*!40000 ALTER TABLE `psychologist` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -807,4 +812,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-12-07  2:06:07
+-- Dump completed on 2018-12-07  9:28:56
