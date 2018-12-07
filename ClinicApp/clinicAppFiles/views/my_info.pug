@@ -2,43 +2,55 @@ extends layout
 
 block content
 	h1 Your Information
-	form(method='POST', action='/infos/edit/'+info.patient.Health_care_id)
+	form(method='POST', action='/myinfo/info')
 		if info.Privilege_Level==0
 			#form-group
+				br
 				label Healthcare ID: 
 				input.form-control(name='health_care_id', type='text', value=info.patient.Health_care_id)
+			#form-group.form-check.form-check-inline
+				span(style="whitespace:nowrap")
+					br
+					label Sex: 
+					br
+					input.form-check.form-check-inline(type="radio", name="sex", value="0", style="margin-left:20px", checked=info.patient.Sex=="0")
+					label.form-check-label Unknown
+					input.form-check.form-check-inline(type="radio", name="sex", value="1", style="margin-left:20px", checked=info.patient.Sex=="1")
+					label.form-check-label Male
+					input.form-check.form-check-inline(type="radio", name="sex", value="2", style="margin-left:20px", checked=info.patient.Sex=="2")
+					label.form-check-label Female
+					input.form-check.form-check-inline(type="radio", name="sex", value="9", style="margin-left:20px", checked=info.patient.Sex=="9")
+					label.form-check-label N/A
 			#form-group
-				label Sex: 
-				input.form-control(type="radio", name="sex", value="0", checked=gender=="0")
-				| Unknown
-				input.form-control(type="radio", name="sex", value="1", checked=gender=="1")
-				| Male
-				input.form-control(type="radio", name="sex", value="2", checked=gender=="2")
-				| Female
-				input.form-control(type="radio", name="sex", value="9", checked=gender=="9")
-				| N/A
-			#form-group
+				br
 				label Birthdate: 
-				input.form-control(type="date", name="birthdate" value =info.patient.Birthdate)
+				input.form-control(type="date", name="birthdate", style="width:180px", value =info.patient.Birthdate)
 		#form-group
+			br
 			label Name Title, If Any (Like "Dr."): 
 			input.form-control(name='title', type='text', value=info.ci.Title)
 		#form-group
+			br
 			label Given Name: 
 			input.form-control(name='fname', type='text', value=info.ci.Fname)
 		#form-group
+			br
 			label Family Name: 
 			input.form-control(name='lname', type='text', value=info.ci.Lname)
 		#form-group
+			br
 			label Address: 
 			input.form-control(name='address', type='text', value=info.ci.Address)
 		#form-group
+			br
 			label Email Address: 
 			input.form-control(name='email', type='email', value=info.ci.Email)
 		#form-group
+			br
 			label Home Phone: 
 			input.form-control(name='home_phone', type='text', value=info.ci.Home_phone)
 		#form-group
+			br
 			label Cell Phone: 
 			input.form-control(name='cell_phone', type='text', value=info.ci.Cell_phone)
 		br

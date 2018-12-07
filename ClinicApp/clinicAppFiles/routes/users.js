@@ -115,7 +115,6 @@ router.get('/editaccount', function(req, res){
 		req.flash('danger', 'Not Logged In');
 		res.redirect('/');
 	}
-
 });
 
 router.post('/editaccount', function(req, res){
