@@ -74,7 +74,7 @@ CREATE TABLE `appointment` (
 
 LOCK TABLES `appointment` WRITE;
 /*!40000 ALTER TABLE `appointment` DISABLE KEYS */;
-INSERT INTO `appointment` VALUES (1,'2012-12-12','11:00:00',1,'Crushing deadlines',0,NULL,NULL,100,0);
+INSERT INTO `appointment` VALUES (1,'2012-12-12','11:00:00',1,'Crushing deadlines',0,NULL,NULL,100,0),(1,'2019-07-12','11:00:00',1,'Crushing deadlines v2',0,NULL,NULL,100,0),(1,'2019-12-12','11:00:00',1,'Crushing deadlines v2',0,NULL,NULL,100,0);
 /*!40000 ALTER TABLE `appointment` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -104,6 +104,7 @@ CREATE TABLE `attends` (
 
 LOCK TABLES `attends` WRITE;
 /*!40000 ALTER TABLE `attends` DISABLE KEYS */;
+INSERT INTO `attends` VALUES (11,1,'2012-12-12','11:00:00'),(11,1,'2019-07-12','11:00:00'),(11,1,'2019-12-12','11:00:00');
 /*!40000 ALTER TABLE `attends` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -204,7 +205,7 @@ CREATE TABLE `contact_info` (
   `Cell_phone` varchar(15) DEFAULT NULL,
   PRIMARY KEY (`CI_ID`),
   UNIQUE KEY `CI_ID_UNIQUE` (`CI_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -213,7 +214,7 @@ CREATE TABLE `contact_info` (
 
 LOCK TABLES `contact_info` WRITE;
 /*!40000 ALTER TABLE `contact_info` DISABLE KEYS */;
-INSERT INTO `contact_info` VALUES (1,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2,'Dr','Lucas','King','177 Streetville Drive','1@email.com','(403) 555-5555','(403) 555-5555'),(3,'Dr','A','B','C','d@email.com','444','444'),(4,'dr','a','b','c','d@email.com','4','4'),(5,'a','b','c','d','e@email.com','f','g'),(6,'a','b','c','d','e@email.com','4','4'),(7,'dr','a','b','c','d@email.com','4','444'),(8,'Dr','f','g','a','g@notakemail.com','4','4'),(9,'dr','mario','','a','b@email.com','c','d'),(10,'dr','family','given','dressad','address@address.com','5','5'),(11,'dr','a','b','a','address@address.com','403','40'),(12,'Dr','Phil','Williamson','181 Arcane Grove','will@notemail.com','(403) 555-5555','(403) 555-5555');
+INSERT INTO `contact_info` VALUES (1,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2,'Dr','Lucas','King','177 Streetville Drive','1@email.com','(403) 555-5555','(403) 555-5555'),(3,'Dr','A','B','C','d@email.com','444','444'),(4,'dr','a','b','c','d@email.com','4','4'),(5,'a','b','c','d','e@email.com','f','g'),(6,'a','b','c','d','e@email.com','4','4'),(7,'dr','a','b','c','d@email.com','4','444'),(8,'Dr','f','g','a','g@notakemail.com','4','4'),(9,'dr','mario','','a','b@email.com','c','d'),(10,'dr','family','given','dressad','address@address.com','5','5'),(11,'dr','a','b','a','address@address.com','403','40'),(12,'Dr','Phil','Williamson','181 Arcane Grove','will@notemail.com','(403) 555-5555','(403) 555-5555'),(13,'Dr','Chris','Mossman','a','a@email.com','(403) 555-5555','(403) 555-5555'),(14,'Dr','Chris','Mossman','a','a@email.com','(403) 555-5555','(403) 555-5555');
 /*!40000 ALTER TABLE `contact_info` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -302,13 +303,13 @@ DROP TABLE IF EXISTS `emergency_services`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `emergency_services` (
-  `ES_ID` int(11) NOT NULL,
+  `ES_ID` int(11) NOT NULL AUTO_INCREMENT,
   `Name` varchar(45) NOT NULL,
   `Description` varchar(255) NOT NULL,
   `Type_Of_Service` varchar(45) NOT NULL,
   `Location` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`ES_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -317,6 +318,7 @@ CREATE TABLE `emergency_services` (
 
 LOCK TABLES `emergency_services` WRITE;
 /*!40000 ALTER TABLE `emergency_services` DISABLE KEYS */;
+INSERT INTO `emergency_services` VALUES (1,'Police','The local police department','Law Enforcement','Some Address');
 /*!40000 ALTER TABLE `emergency_services` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -458,6 +460,7 @@ CREATE TABLE `incident` (
 
 LOCK TABLES `incident` WRITE;
 /*!40000 ALTER TABLE `incident` DISABLE KEYS */;
+INSERT INTO `incident` VALUES (1,'2012-12-12','14:00:00','Patient in distress','High','Distress','Patient was helped.');
 /*!40000 ALTER TABLE `incident` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -511,7 +514,7 @@ CREATE TABLE `medication` (
 
 LOCK TABLES `medication` WRITE;
 /*!40000 ALTER TABLE `medication` DISABLE KEYS */;
-INSERT INTO `medication` VALUES (1,'cam','cam\'s parents','peanut allergy'),(2,'sim','hogwarts','love potion'),(3,'sim','cam','chris'),(4,'test','omar','sim'),(5,'test','onetwo','omar'),(6,'sim','chris','lindsay'),(7,'weed','lindsay\'s house','stress'),(8,'simran','cam','omar');
+INSERT INTO `medication` VALUES (2,'sim','hogwarts','love potion'),(3,'sim','cam','chris'),(4,'test','omar','sim'),(5,'test','onetwo','omar'),(6,'sim','chris','lindsay'),(8,'simran','cam','omar');
 /*!40000 ALTER TABLE `medication` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -690,7 +693,7 @@ CREATE TABLE `survey` (
 
 LOCK TABLES `survey` WRITE;
 /*!40000 ALTER TABLE `survey` DISABLE KEYS */;
-INSERT INTO `survey` VALUES (1,'Survery');
+INSERT INTO `survey` VALUES (1,'Our First Survey');
 /*!40000 ALTER TABLE `survey` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -790,7 +793,7 @@ CREATE TABLE `user_account` (
   UNIQUE KEY `Email_UNIQUE` (`Email`),
   UNIQUE KEY `Username_UNIQUE` (`Username`),
   UNIQUE KEY `id_UNIQUE` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -799,7 +802,7 @@ CREATE TABLE `user_account` (
 
 LOCK TABLES `user_account` WRITE;
 /*!40000 ALTER TABLE `user_account` DISABLE KEYS */;
-INSERT INTO `user_account` VALUES ('yourname','$2a$10$2NUtaQznZUFHYFA2aVLtD.xNZic/zzZ9gwpTL4umrya7Au2e1GatS','sim@email.com',1,'0'),('simsims','$2a$10$nPxu08btTz1asvPL92HblekyEUnQdVpZTbyuFK.s1tx5n0i9sfPkm','simm@email.ca',4,'0'),('boy','$2a$10$lbrn3LNEXGBzZukLF4.j6eY38lgN0/HFvq4eEqcYpwRCYQCV/QiTG','boy@email.com',5,'0'),('girl','$2a$10$R6iYncinRr8XYXE2ja1louIVy9NMZmTNxleSfYnSSEWv5r4oGcw1W','girl@email.com',6,'0'),('admin','$2a$10$NM26BuG.TXFjJNNYqUwP1O02SygWfoTYCqpGmOSMPNWxtl9Ft36ty','admin@email.com',7,'2'),('employee','$2a$10$ON0YQGi4Ze/KzLcHok8lcepqE0TW6z8JpVTNlGjpViNfQONVVeDNK','employee@email.com',8,'1');
+INSERT INTO `user_account` VALUES ('yourname','$2a$10$2NUtaQznZUFHYFA2aVLtD.xNZic/zzZ9gwpTL4umrya7Au2e1GatS','sim@email.com',1,'0'),('simsims','$2a$10$nPxu08btTz1asvPL92HblekyEUnQdVpZTbyuFK.s1tx5n0i9sfPkm','simm@email.ca',4,'0'),('boy','$2a$10$lbrn3LNEXGBzZukLF4.j6eY38lgN0/HFvq4eEqcYpwRCYQCV/QiTG','boy@email.com',5,'0'),('girl','$2a$10$R6iYncinRr8XYXE2ja1louIVy9NMZmTNxleSfYnSSEWv5r4oGcw1W','girl@email.com',6,'0'),('admin','$2a$10$NM26BuG.TXFjJNNYqUwP1O02SygWfoTYCqpGmOSMPNWxtl9Ft36ty','admin@email.com',7,'2'),('employee','$2a$10$ON0YQGi4Ze/KzLcHok8lcepqE0TW6z8JpVTNlGjpViNfQONVVeDNK','employee@email.com',8,'1'),('Client','$2a$10$.M/Pih910zOzZSth1Nye9ea1rx3ckMZlY5zY0ZRMmbECsfZoPw1pG','client2@client.com',10,'0');
 /*!40000 ALTER TABLE `user_account` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -812,4 +815,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-12-07  9:28:56
+-- Dump completed on 2018-12-07 12:26:17
