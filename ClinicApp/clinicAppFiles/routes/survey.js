@@ -1,5 +1,7 @@
 const express = require('express');
 const router = express.Router();
+const url = require('url');
+
 
 var db = require('./../db');
 
@@ -36,6 +38,7 @@ function ensureAuthenticated(req, res, next){
 //Retrieving individual surveys
 // The ':id' is a placeholder
 router.get('/view/:id', function(req, res){
+	console.log("Rendering /view/id")
 	db.query("select * from survey where id = " + req.params.id, function (err, rows, fields){
 		if (err){
 			console.log(err);
