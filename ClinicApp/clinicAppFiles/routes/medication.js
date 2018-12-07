@@ -33,8 +33,20 @@ router.post('/add', ensureAuthenticated, function(req, res) {
         var values = [[req.body.ID, req.body.name, req.body.manufacturer, req.body.description]];
         db.query(query, [values], function (err, result) {
             if (err) {
-                throw err;
-            } else {
+				if (err.code == 'ER_DUP_ENTRY') {
+					var msg = "Error: Med_ID '" + ID + "' is already in use!";
+					
+					if (err.message.indexOf("for key 'PRIMARY'") > 0) {
+						msg = "Error: Med_ID '" + ID + "' is already in use!";
+				}
+				console.log("Duplicate ID");
+				req.flash('danger', msg);
+				res.redirect('/medications/delete');
+               
+				} else {
+					throw err;
+				}
+			} else {
                 req.flash('success', 'Medication added');
                 res.redirect('/');
             }
