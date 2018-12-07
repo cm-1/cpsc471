@@ -22,11 +22,14 @@ block content
 	
 	h2 Missed Appointments:
 	table
-	p {#numMissed}
-	each missed, i in misseds
-		tr
-			td #{missed.date}
-			td #{missed.time}
-			td #{missed.duration} hour(s)
-			td #{missed.psych}
+	p Number of missed appointments: #{numMissed}
+	table(class="table table-bordered")
+		each missed, i in misseds
+			tr.table-danger
+				td #{missed.Date.getMonth( ) + 1 +'/'+ missed.Date.getDate( ) + '/' +missed.Date.getFullYear( )}
+				td #{missed.Time}
+				td #{missed.Duration} hour(s)
+				td #{missed.Lname}
+				td #{missed.Amount_Owed}
+				td #{missed.Amount_Paid}
 	

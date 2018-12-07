@@ -9,43 +9,58 @@ router.get('/book_appt', ensureAuthenticated, function(req, res) {
 });
 
 router.get('/', ensureAuthenticated, function(req, res) {
-	new Promise((resolve, reject) {
-		var q = "Select * from appointment as AP, attends as AT, EMPLOYEE AS E, CONTACT_INFO AS C where AP.date = AT.date and AP.start_time = AT.time and AP.Employee_ID = AT.Employee_ID and AP.Employee_ID = E.Employee_ID and E.CI_ID = C.CI_ID and AT.Healthcare_ID in (SELECT healthcare_id from client_account where accountID =" + req.user.id + ") and AP.date >= (select CURDATE()) and AP.date <= all (Select date from appointment where date >= (select CURDATE()));"
+	var firstMethod = function(){
+		var firstPromise = new Promise((resolve, reject) => {
+			var q = "Select * from appointment as AP, attends as AT, EMPLOYEE AS E, CONTACT_INFO AS C where AP.date = AT.date and AP.start_time = AT.time and AP.Employee_ID = AT.Employee_ID and AP.Employee_ID = E.Employee_ID and E.CI_ID = C.CI_ID and AT.Healthcare_ID in (SELECT healthcare_id from client_account where accountID =" + req.user.id + ") and AP.date >= (select CURDATE()) and AP.date <= all (Select date from appointment where date >= (select CURDATE()));"
+			db.query(q, function (err, rows, fields) {
+				if (err) {
+			
+						throw err;
+					
+				} else {
+					console.log(rows);
+					resolve({upcomings:rows});
+				}
+				//console.log("appt booked");
+			});
+			//resolve({val1:"dog", val2:"pie"});
+		});
+		return firstPromise;
+	};
+	
+	var secondMethod = function(result){
+		var secondPromise = new Promise((resolve, reject) => {
+		console.log("RESULT: ");
+		console.log(result.upcomings);
+		var q = "Select * from appointment as AP, attends as AT, EMPLOYEE AS E, CONTACT_INFO AS C where AP.date = AT.date and AP.start_time = AT.time and AP.Employee_ID = AT.Employee_ID and AP.Employee_ID = E.Employee_ID and E.CI_ID = C.CI_ID and AT.Healthcare_ID in (SELECT healthcare_id from client_account where accountID =" + req.user.id + ") and AP.date < (select CURDATE()) and AP.Attendance_Status = 0;";
 		db.query(q, function (err, rows, fields) {
 			if (err) {
 		
-					throw err;
+				throw err;
 				
 			} else {
 				console.log(rows);
-				resolve({upcomings:rows});
+				resolve({upcomings:result.upcomings, misseds:rows, numMissed:rows.length});
 			}
 			//console.log("appt booked");
 		});
-		//resolve({val1:"dog", val2:"pie"});
-	});
-	
-	upcomingPromise.then(function(val) {
-		
-		res.render('appt_home', {upcomings:val.upcomings});
-	});
-	
-	new Promise((resolve, reject) => {
-		console.log('Initial');
+		});
+		return secondPromise;
 
-		resolve();
-	})
-	.then(() => {
-		throw new Error('Something failed');
-			
-		console.log('Do this');
-	})
-	.catch(() => {
-		console.log('Do that');
-	})
-	.then(() => {
-		console.log('Do this, no matter what happened before');
+	};
+		
+	firstMethod().then(secondMethod).then(function(finalResult) {
+		console.log(finalResult);
+		res.render('appt_home', finalResult);
 	});
+	
+	
+	
+	/*upcomingPromise.then(function(val) {
+		
+	});*/
+	
+
     
 });
 
