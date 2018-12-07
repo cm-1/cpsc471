@@ -40,10 +40,23 @@ block content
 	br
 	table(class="table table-bordered")
 		each available, i in availables
-			tr
-				td #{available.Date.getMonth( ) + 1 +'/'+ available.Date.getDate( ) + '/' +available.Date.getFullYear( )}
-				td #{available.Start_Time}
-				td #{available.Duration} hour(s)
-				td #{available.Lname}
-				td #{available.Amount_Owed}
-				td #{available.Amount_Paid}
+			if(!available.Healthcare_ID)
+				tr
+					td #{available.Date.getMonth( ) + 1 +'/'+ available.Date.getDate( ) + '/' +available.Date.getFullYear( )}
+					td #{available.Start_Time}
+					td #{available.Duration} hour(s)
+					td #{available.Lname}
+					td #{available.Amount_Owed}
+					td #{available.Amount_Paid}
+					td
+						form(method='POST', action='/appointment/book_appt/?year=' + available.Date.getFullYear( ) + "&month=" + (available.Date.getMonth( ) + 1) + "&day=" + available.Date.getDate( ) + "&time=" + available.Start_Time + "&empid=" + available.Employee_ID)
+							input.btn.btn-primary(type='submit', value='Book')
+			else
+				tr.table-success
+					td #{available.Date.getMonth( ) + 1 +'/'+ available.Date.getDate( ) + '/' +available.Date.getFullYear( )}
+					td #{available.Start_Time}
+					td #{available.Duration} hour(s)
+					td #{available.Lname}
+					td #{available.Amount_Owed}
+					td #{available.Amount_Paid}
+					

@@ -53,7 +53,7 @@ router.get('/', ensureAuthenticated, function(req, res) {
 		console.log("RESULT: ");
 		console.log(result.upcomings);
 		var q = `SELECT PSCI.Title, PSCI.Fname, PSCI.Lname, A.Date,
-A.Start_Time, A.Duration, A.Amount_owed, A.Amount_paid,
+A.Start_Time, A.Duration, A.Amount_owed, A.Amount_paid, A.Employee_ID,
 A.Reason, A.Attendance_status, A.Amount_Paid, A.Amount_Owed,
 A.Dr_notes, ATT.Healthcare_ID
 FROM PSYCHOLOGIST as PS, PATIENT as PA, 
@@ -92,30 +92,18 @@ AND A.Date >= (select curdate()) order by A.date, A.start_time;`
 	});*/
 });
 
-router.post('/book_appt', ensureAuthenticated, function(req, res) {
-    
-    const name = req.body.name;
-    const emName = req.body.emName;
-    const date = req.body.date;
-    const time = req.body.time;
-    const hcid = req.body.hcid;
 
-    req.checkBody('hcid', 'HealthcareID is required').notEmpty();
-    req.checkBody('name', 'Name is required').notEmpty();
-    req.checkBody('emName', 'Employee ID is required').notEmpty();
-    req.checkBody('date', 'Date is required').notEmpty();
-    //req.checkBody('time', 'time is required').notEmpty();
-	console.log("TIME: " + time)
+
+router.post('/book_appt', ensureAuthenticated, function(req, res) {
+	var date = req.query.year + "-" + req.query.month + "-" + req.query.day;
+	var emp = req.query.empid;
+	var time = req.query.time;
+	console.log([emp, time, req.user.id]);
     
-    /* Going off users.js, checking to see if the med_id is already in the table */ 
-    let errors = req.validationErrors();
-    if (errors) {
-        res.render('book_appt', {Title:'Book your Appointment', errors: errors});
-    } else {
-        var query = "INSERT INTO attends (Healthcare_ID, Employee_ID, Date, Time) VALUES ?";
-        var values = [[req.body.hcid, req.body.emName, req.body.date, req.body.time]];
-		console.log("VALUES: " + values);
-        db.query(query, [values], function (err, result) {
+        var query = "INSERT INTO attends (Healthcare_ID, Employee_ID, Date, Time) VALUES ?;";
+		var vals = [[11, emp, date, time]];
+		console.log(query);
+        db.query(query, [vals], function (err, result) {
             if (err) {
 				if (err.code == 'ER_DUP_ENTRY') {
 					var msg = "Error: Date '" + date + "' is already in use!";
@@ -133,11 +121,11 @@ router.post('/book_appt', ensureAuthenticated, function(req, res) {
 				}
 			} else {
                 req.flash('success', 'Appointment booked');
-                res.redirect('/');
+                res.redirect('/appointment');
             }
             console.log("appt booked");
         });
-    }
+   
 });
 
 
