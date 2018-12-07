@@ -17,6 +17,7 @@ router.post('/register', function(req, res){
 	const username = req.body.username;
 	const password = req.body.password;
 	const password2 = req.body.password2;
+	console.log(req.body);
 	
 	req.checkBody('email', 'Email is required').notEmpty();
 	req.checkBody('email', 'Email is not valid').isEmail();
@@ -115,7 +116,6 @@ router.get('/editaccount', function(req, res){
 		req.flash('danger', 'Not Logged In');
 		res.redirect('/');
 	}
-
 });
 
 router.post('/editaccount', function(req, res){

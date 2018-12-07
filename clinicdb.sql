@@ -202,7 +202,7 @@ CREATE TABLE `contact_info` (
   `Cell_phone` varchar(15) DEFAULT NULL,
   PRIMARY KEY (`CI_ID`),
   UNIQUE KEY `CI_ID_UNIQUE` (`CI_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -211,6 +211,7 @@ CREATE TABLE `contact_info` (
 
 LOCK TABLES `contact_info` WRITE;
 /*!40000 ALTER TABLE `contact_info` DISABLE KEYS */;
+INSERT INTO `contact_info` VALUES (1,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `contact_info` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -465,7 +466,7 @@ DROP TABLE IF EXISTS `informed_of`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `informed_of` (
-  `Employee_ID` int(11) NOT NULL,
+  `Employee_ID` int(11) NOT NULL AUTO_INCREMENT,
   `Date` date NOT NULL,
   `Time` time NOT NULL,
   `ES_ID` int(11) NOT NULL,
@@ -596,7 +597,7 @@ DROP TABLE IF EXISTS `question`;
 CREATE TABLE `question` (
   `Survey_ID` int(11) NOT NULL,
   `Number` int(11) NOT NULL,
-  `Answer_format` varchar(45) NOT NULL,
+  `Answer_format` int(11) NOT NULL,
   `Required` varchar(45) NOT NULL,
   `Prompt` varchar(45) NOT NULL,
   PRIMARY KEY (`Survey_ID`,`Number`),
@@ -610,6 +611,7 @@ CREATE TABLE `question` (
 
 LOCK TABLES `question` WRITE;
 /*!40000 ALTER TABLE `question` DISABLE KEYS */;
+INSERT INTO `question` VALUES (1,1,5,'1','What is your age'),(1,2,5,'0','What is not your age?');
 /*!40000 ALTER TABLE `question` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -683,6 +685,7 @@ CREATE TABLE `survey` (
 
 LOCK TABLES `survey` WRITE;
 /*!40000 ALTER TABLE `survey` DISABLE KEYS */;
+INSERT INTO `survey` VALUES (1,'Survery');
 /*!40000 ALTER TABLE `survey` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -777,12 +780,11 @@ CREATE TABLE `user_account` (
   `Password` char(60) NOT NULL,
   `Email` varchar(254) NOT NULL,
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `Privilege_Level` char(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `Email_UNIQUE` (`Email`),
   UNIQUE KEY `Username_UNIQUE` (`Username`),
   UNIQUE KEY `id_UNIQUE` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -791,7 +793,7 @@ CREATE TABLE `user_account` (
 
 LOCK TABLES `user_account` WRITE;
 /*!40000 ALTER TABLE `user_account` DISABLE KEYS */;
-INSERT INTO `user_account` VALUES ('admin','$2a$10$k5J6wflc5a2wTdJ86ekH.O/ywTn/T94a3WUGloH8/wQxGTR1ffpi.','admin@email.com',1,'2');
+INSERT INTO `user_account` VALUES ('yourname','$2a$10$2NUtaQznZUFHYFA2aVLtD.xNZic/zzZ9gwpTL4umrya7Au2e1GatS','sim@email.com',1),('simsims','$2a$10$nPxu08btTz1asvPL92HblekyEUnQdVpZTbyuFK.s1tx5n0i9sfPkm','simm@email.ca',4),('boy','$2a$10$lbrn3LNEXGBzZukLF4.j6eY38lgN0/HFvq4eEqcYpwRCYQCV/QiTG','boy@email.com',5);
 /*!40000 ALTER TABLE `user_account` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -804,4 +806,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-12-06 16:28:28
+-- Dump completed on 2018-12-06 23:50:16

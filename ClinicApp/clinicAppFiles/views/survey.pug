@@ -1,0 +1,23 @@
+extends layout
+
+block content
+	h1 #{survey.Name}
+	hr
+	ul.list-group
+		each question, i in questions
+			li.list-group-item
+				h2 Question #{question.number} - #{question.prompt}
+				#form-group.form-check.form-check-inline
+					span(style="whitespace:nowrap")
+						label Answer: 
+						br
+						input.form-check.form-check-inline(type="radio", name="q"+question.number, value="1", style="margin-left:20px")
+						label.form-check-label 1
+						input.form-check.form-check-inline(type="radio", name="q"+question.number, value="2", style="margin-left:20px")
+						label.form-check-label 2
+						input.form-check.form-check-inline(type="radio", name="q"+question.number, value="3", style="margin-left:20px")
+						label.form-check-label 3
+						input.form-check.form-check-inline(type="radio", name="q"+question.number, value="4", style="margin-left:20px")
+						label.form-check-label 4
+						input.form-check.form-check-inline(type="radio", name="q"+question.number, value="5", style="margin-left:20px")
+						label.form-check-label 5
