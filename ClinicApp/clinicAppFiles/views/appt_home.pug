@@ -7,8 +7,9 @@ block content
 
 		
 	h1 Your Appointments
-	
+	br
 	h2 Upcoming Appointment:
+	br
 	//-table-responsive
 	table(class="table table-bordered")
 		each upcoming, i in upcomings
@@ -19,9 +20,10 @@ block content
 				td #{upcoming.Lname}
 				td #{upcoming.Amount_Owed}
 				td #{upcoming.Amount_Paid}
-	
+	br
+	br
 	h2 Missed Appointments:
-	table
+	br
 	p Number of missed appointments: #{numMissed}
 	table(class="table table-bordered")
 		each missed, i in misseds
@@ -32,4 +34,16 @@ block content
 				td #{missed.Lname}
 				td #{missed.Amount_Owed}
 				td #{missed.Amount_Paid}
-	
+	br
+	br
+	h2 Available Appointments:
+	br
+	table(class="table table-bordered")
+		each available, i in availables
+			tr
+				td #{available.Date.getMonth( ) + 1 +'/'+ available.Date.getDate( ) + '/' +available.Date.getFullYear( )}
+				td #{available.Start_Time}
+				td #{available.Duration} hour(s)
+				td #{available.Lname}
+				td #{available.Amount_Owed}
+				td #{available.Amount_Paid}
