@@ -44,6 +44,42 @@ router.post('/add', ensureAuthenticated, function(req, res) {
 });
 
 
+router.get('/delete', ensureAuthenticated, function(req, res) {
+
+
+	db.query("select * from medication", function(err, rows, fields) {
+		if (err) {
+			console.log("error in select * from medication, medication.js");
+			throw err;
+		}
+		res.render('delete_medication', {title:'Enter the ID you\'d like to delete', medication:rows});
+	});
+});
+
+/* View all medication in the table and remove by ID */
+router.post("/delete", function(req, res) {
+	const ID = req.body.ID;
+	req.checkBody('ID', 'ID must match a current ID').notEmpty();
+	
+	var delQuery = "DELETE from MEDICATION where ID =" + ID;
+
+	db.query("select * from medication where ID ="+ ID, function (err, rows, fields) {
+		if (err) {
+			console.log(err);
+			throw err;
+		} else {
+			db.query(delQuery, function (err2, rows2, fields2) {
+				if (err2) {
+					console.log(err2);
+				} else {
+					req.flash('success', 'Medication removed');
+					res.redirect('/');
+				}
+			});
+		}
+	});
+});
+
 function ensureAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {
         return next();
