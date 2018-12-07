@@ -103,6 +103,8 @@ app.use('/survey', survey);
 let appt = require('./routes/appointment');
 app.use('/appointment', appt);
 
+let incidents = require('./routes/incidents');
+app.use('/incidents', incidents);
 
 app.listen(3000, function(){
 	console.log("Server started on port 3000...");
