@@ -38,7 +38,7 @@ router.post('/add', ensureAuthenticated, function(req, res) {
 					
 					if (err.message.indexOf("for key 'PRIMARY'") > 0) {
 						msg = "Error: Med_ID '" + ID + "' is already in use!";
-				}
+					}
 				console.log("Duplicate ID");
 				req.flash('danger', msg);
 				res.redirect('/medications/delete');
