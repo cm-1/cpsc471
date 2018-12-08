@@ -92,7 +92,27 @@ AND A.Date >= (select curdate()) order by A.date, A.start_time;`
 	});*/
 });
 
+router.post('/cancel_appt', ensureAuthenticated, function(req, res) {
+	var date = req.query.year + "-" + req.query.month + "-" + req.query.day;
+	var emp = req.query.empid;
+	var time = req.query.time;
+	console.log([emp, time, req.user.id]);
+    
+        var query = "DELETE FROM attends where Healthcare_ID=(Select max(healthcare_id) from client_account where accountID=" + req.user.id + ") and Employee_ID=" + parseInt(emp, 10) +" and Date= '" + date + "' and Time='" + time + "';";
+		console.log(query);
+        db.query(query, function (err, result) {
+            if (err) {
 
+					throw err;
+				
+			} else {
+                req.flash('success', 'Appointment cancelled');
+                res.redirect('/appointment');
+            }
+            console.log("appt cancelled");
+        });
+   
+});
 
 router.post('/book_appt', ensureAuthenticated, function(req, res) {
 	var date = req.query.year + "-" + req.query.month + "-" + req.query.day;
@@ -100,10 +120,9 @@ router.post('/book_appt', ensureAuthenticated, function(req, res) {
 	var time = req.query.time;
 	console.log([emp, time, req.user.id]);
     
-        var query = "INSERT INTO attends (Healthcare_ID, Employee_ID, Date, Time) VALUES ?;";
-		var vals = [[11, emp, date, time]];
+        var query = "INSERT INTO attends (Healthcare_ID, Employee_ID, Date, Time) VALUES ((Select max(healthcare_id) from client_account where accountID=" + req.user.id + "), " + parseInt(emp, 10) + ", '" + date + "', '" + time + "');";
 		console.log(query);
-        db.query(query, [vals], function (err, result) {
+        db.query(query, function (err, result) {
             if (err) {
 				if (err.code == 'ER_DUP_ENTRY') {
 					var msg = "Error: Date '" + date + "' is already in use!";

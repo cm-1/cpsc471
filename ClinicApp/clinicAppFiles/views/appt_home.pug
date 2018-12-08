@@ -59,4 +59,6 @@ block content
 					td #{available.Lname}
 					td #{available.Amount_Owed}
 					td #{available.Amount_Paid}
-					
+					td
+						form(method='POST', action='/appointment/cancel_appt/?year=' + available.Date.getFullYear( ) + "&month=" + (available.Date.getMonth( ) + 1) + "&day=" + available.Date.getDate( ) + "&time=" + available.Start_Time + "&empid=" + available.Employee_ID)
+							input.btn.btn-primary(type='submit', value='Cancel')
