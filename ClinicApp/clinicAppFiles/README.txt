@@ -9,4 +9,3 @@ For ease of memorization, the default accounts' passwords are just their usernam
 These can be changed, if you'd like, once you've logged in.
 	
 That's all the technicall stuff! For the rest, consult the user manual in the pdf.
-	
