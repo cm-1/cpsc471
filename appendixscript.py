@@ -42,12 +42,15 @@ for t in tables:
     count = 0
     for index, row in dft.iterrows():
         print("\\item ", end="")
+        colcount = 0
         for col in list(dft.columns):
-            if col != dft.columns[-1]:
-                s1 = str(row[col]).replace(r"$", r"\$")
-                s2 = s1.replace(r"_", r"\_")
-                s3 = s2.replace(r"%", r"\%")
-                print(s3, end='; ')
+            s1 = str(row[col]).replace(r"$", r"\$")
+            s2 = s1.replace(r"_", r"\_")
+            s3 = s2.replace(r"%", r"\%")
+            print(s3, end="")
+            if colcount < len(dft.columns) - 1:
+                print("; ", end='')
+            colcount += 1
         print()
         count += 1
     if count == 0:
