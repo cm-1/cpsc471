@@ -57,7 +57,7 @@ CREATE TABLE `appointment` (
   `Date` date NOT NULL,
   `Start_Time` time NOT NULL,
   `Duration` int(11) NOT NULL,
-  `Reason` varchar(155) NOT NULL,
+  `Reason` varchar(155) DEFAULT NULL,
   `Attendance_Status` tinyint(4) NOT NULL,
   `Dr_Notes` varchar(155) DEFAULT NULL,
   `Dr_Private_Notes` varchar(155) DEFAULT NULL,
@@ -74,7 +74,7 @@ CREATE TABLE `appointment` (
 
 LOCK TABLES `appointment` WRITE;
 /*!40000 ALTER TABLE `appointment` DISABLE KEYS */;
-INSERT INTO `appointment` VALUES (1,'2012-12-12','11:00:00',1,'Crushing deadlines',0,NULL,NULL,100,0),(1,'2019-07-12','11:00:00',1,'Crushing deadlines v2',0,NULL,NULL,100,0),(1,'2019-12-12','11:00:00',1,'Crushing deadlines v2',0,NULL,NULL,100,0);
+INSERT INTO `appointment` VALUES (1,'2012-12-12','11:00:00',1,'Crushing deadlines',0,NULL,NULL,100,0),(1,'2018-12-12','12:00:00',2,NULL,0,NULL,NULL,100,0),(1,'2019-07-12','11:00:00',1,'Crushing deadlines v2',0,NULL,NULL,100,0),(1,'2019-12-12','11:00:00',1,'Crushing deadlines v2',0,NULL,NULL,100,0);
 /*!40000 ALTER TABLE `appointment` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -104,7 +104,7 @@ CREATE TABLE `attends` (
 
 LOCK TABLES `attends` WRITE;
 /*!40000 ALTER TABLE `attends` DISABLE KEYS */;
-INSERT INTO `attends` VALUES (11,1,'2012-12-12','11:00:00'),(11,1,'2019-07-12','11:00:00'),(11,1,'2019-12-12','11:00:00');
+INSERT INTO `attends` VALUES (11,1,'2012-12-12','11:00:00'),(11,1,'2018-12-12','12:00:00'),(11,1,'2019-07-12','11:00:00');
 /*!40000 ALTER TABLE `attends` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -514,7 +514,7 @@ CREATE TABLE `medication` (
 
 LOCK TABLES `medication` WRITE;
 /*!40000 ALTER TABLE `medication` DISABLE KEYS */;
-INSERT INTO `medication` VALUES (2,'sim','hogwarts','love potion'),(3,'sim','cam','chris'),(4,'test','omar','sim'),(5,'test','onetwo','omar'),(6,'sim','chris','lindsay'),(8,'simran','cam','omar');
+INSERT INTO `medication` VALUES (2,'sim','hogwarts','love potion'),(3,'sim','cam','chris'),(4,'test','omar','sim'),(6,'sim','chris','lindsay'),(8,'simran','cam','omar');
 /*!40000 ALTER TABLE `medication` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -605,7 +605,7 @@ DROP TABLE IF EXISTS `question`;
 CREATE TABLE `question` (
   `Survey_ID` int(11) NOT NULL,
   `Number` int(11) NOT NULL,
-  `Answer_format` int(11) NOT NULL,
+  `Weight` int(11) NOT NULL,
   `Required` varchar(45) NOT NULL,
   `Prompt` varchar(45) NOT NULL,
   PRIMARY KEY (`Survey_ID`,`Number`),
@@ -793,7 +793,7 @@ CREATE TABLE `user_account` (
   UNIQUE KEY `Email_UNIQUE` (`Email`),
   UNIQUE KEY `Username_UNIQUE` (`Username`),
   UNIQUE KEY `id_UNIQUE` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -815,4 +815,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-12-07 12:26:17
+-- Dump completed on 2018-12-14 18:08:14
