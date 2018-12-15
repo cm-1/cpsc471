@@ -106,6 +106,8 @@ app.use('/appointment', appt);
 let incidents = require('./routes/incidents');
 app.use('/incidents', incidents);
 
+let notes = require('./routes/drnotes');
+app.use('/notes', notes);
 app.listen(3000, function(){
 	console.log("Server started on port 3000...");
 });
