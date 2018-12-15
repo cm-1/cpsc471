@@ -15,16 +15,16 @@ router.post('/add', ensureAuthenticated, function(req, res) {
 	const notes = req.body.dr_notes;
 	const date = req.body.date;
 	const time = req.body.time;
+	//console.log("\n\nDATE: " + date + "\nTIME: " + time + "\n\n");
 
 	let errors = req.validationErrors();
 	if (errors) {
 		res.render('add_notes', {title:'Notes', errors: errors});
 	} else {
 
-		var query = "INSERT into appointment (dr_notes) VALUES where (employee_id='" + eid + "', date='" + date + "', start_time='" + time + "');";
-		var values = [[req.body.dr_notes]];
-
-		db.query(query, [values], function(err, result) {
+		var query = "UPDATE appointment SET dr_notes = '" + notes + "' where employee_id='" + eid + "' and date='" + date + "' and start_time='" + time + ":00';";
+		console.log(query);
+		db.query(query, function(err, result) {
 			if (err) {
 				/* figure out error codes later */
 				throw err; 
