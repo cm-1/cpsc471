@@ -1,0 +1,22 @@
+extends layout
+
+block content
+
+	hr
+
+	ul.list-group
+		each question, i in questions
+			li.list-group-item
+				h2 Question #{question.number} - #{question.prompt}
+				form(method='POST', action='/survey/view/:id')
+					#form-group.form-check.form-check-inline
+						span(style="whitespace:nowrap")
+							label Answer: 
+							br
+							input.form-check.form-check-inline(type="text", name="q"+question.number, style="margin-left:20px")
+				
+						
+						input.btn.btn-primary(type='submit', value='Submit')
+
+
+

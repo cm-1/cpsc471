@@ -1,0 +1,20 @@
+extends layout
+
+block content
+
+
+	ul.list-group
+		each med, i in medication
+			li.list-group-item
+				Medication ID: #{med.ID}  Name: #{med.name} Manufacturer: #{med.manufacturer} Description: #{med.description}
+
+	br
+	br
+
+	h1 #{title}
+	form(method='POST', action='/medications/delete')
+		#form-group
+			label Medication ID:
+			input.form-control(name='ID', type='text')
+		br
+		input.btn.btn-primary(type='submit', value='Submit')

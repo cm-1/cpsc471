@@ -74,7 +74,7 @@ CREATE TABLE `appointment` (
 
 LOCK TABLES `appointment` WRITE;
 /*!40000 ALTER TABLE `appointment` DISABLE KEYS */;
-INSERT INTO `appointment` VALUES (1,'2012-12-12','11:00:00',1,'Crushing deadlines',0,NULL,NULL,100,0),(1,'2018-12-12','12:00:00',2,NULL,0,NULL,NULL,100,0),(1,'2019-07-12','11:00:00',1,'Crushing deadlines v2',0,NULL,NULL,100,0),(1,'2019-12-12','11:00:00',1,'Crushing deadlines v2',0,NULL,NULL,100,0);
+INSERT INTO `appointment` VALUES (1,'2012-12-12','11:00:00',1,'Crushing deadlines',0,'1 missed appointment','I\'m so disappointed in them.',100,0),(1,'2018-12-12','12:00:00',2,NULL,0,NULL,NULL,100,0),(1,'2019-07-12','11:00:00',1,'Crushing deadlines v2',0,NULL,NULL,100,0),(1,'2019-12-12','11:00:00',1,'Crushing deadlines v2',0,NULL,NULL,100,0);
 /*!40000 ALTER TABLE `appointment` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -104,7 +104,7 @@ CREATE TABLE `attends` (
 
 LOCK TABLES `attends` WRITE;
 /*!40000 ALTER TABLE `attends` DISABLE KEYS */;
-INSERT INTO `attends` VALUES (11,1,'2012-12-12','11:00:00'),(11,1,'2018-12-12','12:00:00'),(11,1,'2019-07-12','11:00:00');
+INSERT INTO `attends` VALUES (777777777,1,'2012-12-12','11:00:00'),(777777777,1,'2018-12-12','12:00:00'),(777777777,1,'2019-07-12','11:00:00');
 /*!40000 ALTER TABLE `attends` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -131,6 +131,7 @@ CREATE TABLE `caregiver_in` (
 
 LOCK TABLES `caregiver_in` WRITE;
 /*!40000 ALTER TABLE `caregiver_in` DISABLE KEYS */;
+INSERT INTO `caregiver_in` VALUES (777777777,1);
 /*!40000 ALTER TABLE `caregiver_in` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -157,6 +158,7 @@ CREATE TABLE `caregiver_of` (
 
 LOCK TABLES `caregiver_of` WRITE;
 /*!40000 ALTER TABLE `caregiver_of` DISABLE KEYS */;
+INSERT INTO `caregiver_of` VALUES (777777777,111111111);
 /*!40000 ALTER TABLE `caregiver_of` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -183,7 +185,7 @@ CREATE TABLE `client_account` (
 
 LOCK TABLES `client_account` WRITE;
 /*!40000 ALTER TABLE `client_account` DISABLE KEYS */;
-INSERT INTO `client_account` VALUES (5,11);
+INSERT INTO `client_account` VALUES (5,777777777);
 /*!40000 ALTER TABLE `client_account` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -214,7 +216,7 @@ CREATE TABLE `contact_info` (
 
 LOCK TABLES `contact_info` WRITE;
 /*!40000 ALTER TABLE `contact_info` DISABLE KEYS */;
-INSERT INTO `contact_info` VALUES (1,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2,'Dr','Lucas','King','177 Streetville Drive','1@email.com','(403) 555-5555','(403) 555-5555'),(3,'Dr','A','B','C','d@email.com','444','444'),(4,'dr','a','b','c','d@email.com','4','4'),(5,'a','b','c','d','e@email.com','f','g'),(6,'a','b','c','d','e@email.com','4','4'),(7,'dr','a','b','c','d@email.com','4','444'),(8,'Dr','f','g','a','g@notakemail.com','4','4'),(9,'dr','mario','','a','b@email.com','c','d'),(10,'dr','family','given','dressad','address@address.com','5','5'),(11,'dr','a','b','a','address@address.com','403','40'),(12,'Dr','Phil','Williamson','181 Arcane Grove','will@notemail.com','(403) 555-5555','(403) 555-5555'),(13,'Dr','Chris','Mossman','a','a@email.com','(403) 555-5555','(403) 555-5555'),(14,'Dr','Chris','Mossman','a','a@email.com','(403) 555-5555','(403) 555-5555');
+INSERT INTO `contact_info` VALUES (1,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2,'Dr','Lucas','King','177 Streetville Drive','1@email.com','(403) 555-5555','(403) 555-5555'),(11,'','Jim','Smith','some address','address@address.com','(403) 555-5555','(403) 555-5555'),(12,'Dr','Phil','Williamson','181 Arcane Grove','will@notemail.com','(403) 555-5555','(403) 555-5555'),(13,'Dr','Chris','Sommuahc','some address','a@email.com','(403) 555-5555','(403) 555-5555'),(14,NULL,'Sim','Atari','some other address','b@email.com','(403) 555-5555','(403) 555-55555');
 /*!40000 ALTER TABLE `contact_info` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -241,6 +243,7 @@ CREATE TABLE `dependent_in` (
 
 LOCK TABLES `dependent_in` WRITE;
 /*!40000 ALTER TABLE `dependent_in` DISABLE KEYS */;
+INSERT INTO `dependent_in` VALUES (111111111,1);
 /*!40000 ALTER TABLE `dependent_in` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -265,6 +268,7 @@ CREATE TABLE `diagnosis` (
 
 LOCK TABLES `diagnosis` WRITE;
 /*!40000 ALTER TABLE `diagnosis` DISABLE KEYS */;
+INSERT INTO `diagnosis` VALUES (777777777,'Paranoia');
 /*!40000 ALTER TABLE `diagnosis` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -309,7 +313,7 @@ CREATE TABLE `emergency_services` (
   `Type_Of_Service` varchar(45) NOT NULL,
   `Location` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`ES_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -318,7 +322,7 @@ CREATE TABLE `emergency_services` (
 
 LOCK TABLES `emergency_services` WRITE;
 /*!40000 ALTER TABLE `emergency_services` DISABLE KEYS */;
-INSERT INTO `emergency_services` VALUES (1,'Police','The local police department','Law Enforcement','Some Address');
+INSERT INTO `emergency_services` VALUES (1,'Police','The local police department','Law Enforcement','Some Address'),(2,'Hospital','The local hospital.','Medical','Some other address');
 /*!40000 ALTER TABLE `emergency_services` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -405,6 +409,7 @@ CREATE TABLE `experiences` (
 
 LOCK TABLES `experiences` WRITE;
 /*!40000 ALTER TABLE `experiences` DISABLE KEYS */;
+INSERT INTO `experiences` VALUES (777777777,'2012-12-12','14:00:00',1);
 /*!40000 ALTER TABLE `experiences` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -431,6 +436,7 @@ CREATE TABLE `family_group` (
 
 LOCK TABLES `family_group` WRITE;
 /*!40000 ALTER TABLE `family_group` DISABLE KEYS */;
+INSERT INTO `family_group` VALUES (1,'Test Group',1);
 /*!40000 ALTER TABLE `family_group` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -480,7 +486,7 @@ CREATE TABLE `informed_of` (
   KEY `ES_ID_idx` (`ES_ID`),
   CONSTRAINT `ES_ID` FOREIGN KEY (`ES_ID`) REFERENCES `emergency_services` (`ES_ID`),
   CONSTRAINT `informed_incident` FOREIGN KEY (`Employee_ID`, `Date`, `Time`) REFERENCES `incident` (`Employee_ID`, `Date`, `Time`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -489,6 +495,7 @@ CREATE TABLE `informed_of` (
 
 LOCK TABLES `informed_of` WRITE;
 /*!40000 ALTER TABLE `informed_of` DISABLE KEYS */;
+INSERT INTO `informed_of` VALUES (1,'2012-12-12','14:00:00',2);
 /*!40000 ALTER TABLE `informed_of` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -542,7 +549,7 @@ CREATE TABLE `patient` (
 
 LOCK TABLES `patient` WRITE;
 /*!40000 ALTER TABLE `patient` DISABLE KEYS */;
-INSERT INTO `patient` VALUES (1,'2018-12-05','1',4),(2,'2018-12-04','1',6),(3,'2018-12-12','1',7),(4,'2018-12-11','1',8),(5,'2018-12-12','1',9),(6,'2018-12-04','1',10),(11,'2018-12-11','1',11);
+INSERT INTO `patient` VALUES (111111111,'2008-12-11','2',14),(777777777,'1988-12-11','1',11);
 /*!40000 ALTER TABLE `patient` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -567,7 +574,7 @@ CREATE TABLE `psychologist` (
 
 LOCK TABLES `psychologist` WRITE;
 /*!40000 ALTER TABLE `psychologist` DISABLE KEYS */;
-INSERT INTO `psychologist` VALUES (1,0);
+INSERT INTO `psychologist` VALUES (1,1);
 /*!40000 ALTER TABLE `psychologist` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -592,6 +599,7 @@ CREATE TABLE `qualifications` (
 
 LOCK TABLES `qualifications` WRITE;
 /*!40000 ALTER TABLE `qualifications` DISABLE KEYS */;
+INSERT INTO `qualifications` VALUES (1,'Masters in Social Work'),(1,'Bachelor in Psychology');
 /*!40000 ALTER TABLE `qualifications` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -606,8 +614,8 @@ CREATE TABLE `question` (
   `Survey_ID` int(11) NOT NULL,
   `Number` int(11) NOT NULL,
   `Weight` int(11) NOT NULL,
-  `Required` varchar(45) NOT NULL,
-  `Prompt` varchar(45) NOT NULL,
+  `Required` tinyint(1) NOT NULL,
+  `Prompt` varchar(255) NOT NULL,
   PRIMARY KEY (`Survey_ID`,`Number`),
   CONSTRAINT `question_survey` FOREIGN KEY (`Survey_ID`) REFERENCES `survey` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -619,7 +627,7 @@ CREATE TABLE `question` (
 
 LOCK TABLES `question` WRITE;
 /*!40000 ALTER TABLE `question` DISABLE KEYS */;
-INSERT INTO `question` VALUES (1,1,5,'1','What is your age'),(1,2,5,'0','What is not your age?');
+INSERT INTO `question` VALUES (1,1,5,1,'What is your age?'),(1,2,5,0,'On a scale from 1-10, how distressed do you feel?'),(1,3,5,1,'Have you thought about hurting yourself since your last appointment?');
 /*!40000 ALTER TABLE `question` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -670,6 +678,7 @@ CREATE TABLE `side_effect` (
 
 LOCK TABLES `side_effect` WRITE;
 /*!40000 ALTER TABLE `side_effect` DISABLE KEYS */;
+INSERT INTO `side_effect` VALUES (2,'Dizzyness'),(6,'Dry Mouth');
 /*!40000 ALTER TABLE `side_effect` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -693,7 +702,7 @@ CREATE TABLE `survey` (
 
 LOCK TABLES `survey` WRITE;
 /*!40000 ALTER TABLE `survey` DISABLE KEYS */;
-INSERT INTO `survey` VALUES (1,'Our First Survey');
+INSERT INTO `survey` VALUES (1,'Our First Survery');
 /*!40000 ALTER TABLE `survey` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -749,6 +758,7 @@ CREATE TABLE `takes` (
 
 LOCK TABLES `takes` WRITE;
 /*!40000 ALTER TABLE `takes` DISABLE KEYS */;
+INSERT INTO `takes` VALUES (777777777,2,10);
 /*!40000 ALTER TABLE `takes` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -762,7 +772,7 @@ DROP TABLE IF EXISTS `use`;
 CREATE TABLE `use` (
   `Med_ID` int(11) NOT NULL,
   `Use` varchar(65) NOT NULL,
-  PRIMARY KEY (`Med_ID`),
+  PRIMARY KEY (`Med_ID`,`Use`),
   CONSTRAINT `use_med` FOREIGN KEY (`Med_ID`) REFERENCES `medication` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -773,6 +783,7 @@ CREATE TABLE `use` (
 
 LOCK TABLES `use` WRITE;
 /*!40000 ALTER TABLE `use` DISABLE KEYS */;
+INSERT INTO `use` VALUES (2,'Headaches'),(3,'Anxiety'),(3,'Depression'),(4,'Bipolar'),(6,'Depression'),(8,'Schizophrenia');
 /*!40000 ALTER TABLE `use` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -802,7 +813,7 @@ CREATE TABLE `user_account` (
 
 LOCK TABLES `user_account` WRITE;
 /*!40000 ALTER TABLE `user_account` DISABLE KEYS */;
-INSERT INTO `user_account` VALUES ('yourname','$2a$10$2NUtaQznZUFHYFA2aVLtD.xNZic/zzZ9gwpTL4umrya7Au2e1GatS','sim@email.com',1,'0'),('simsims','$2a$10$nPxu08btTz1asvPL92HblekyEUnQdVpZTbyuFK.s1tx5n0i9sfPkm','simm@email.ca',4,'0'),('boy','$2a$10$lbrn3LNEXGBzZukLF4.j6eY38lgN0/HFvq4eEqcYpwRCYQCV/QiTG','boy@email.com',5,'0'),('girl','$2a$10$R6iYncinRr8XYXE2ja1louIVy9NMZmTNxleSfYnSSEWv5r4oGcw1W','girl@email.com',6,'0'),('admin','$2a$10$NM26BuG.TXFjJNNYqUwP1O02SygWfoTYCqpGmOSMPNWxtl9Ft36ty','admin@email.com',7,'2'),('employee','$2a$10$ON0YQGi4Ze/KzLcHok8lcepqE0TW6z8JpVTNlGjpViNfQONVVeDNK','employee@email.com',8,'1'),('Client','$2a$10$.M/Pih910zOzZSth1Nye9ea1rx3ckMZlY5zY0ZRMmbECsfZoPw1pG','client2@client.com',10,'0');
+INSERT INTO `user_account` VALUES ('yourname','$2a$10$2NUtaQznZUFHYFA2aVLtD.xNZic/zzZ9gwpTL4umrya7Au2e1GatS','sim@email.com',1,'0'),('simsims','$2a$10$nPxu08btTz1asvPL92HblekyEUnQdVpZTbyuFK.s1tx5n0i9sfPkm','simm@email.ca',4,'0'),('client','$2a$10$x3QxI1Jg/o3Z4XR5rQ42VexcY6yfJKunBgDG6V3AhFH/mBeNi3UJG','client@email.com',5,'0'),('girl','$2a$10$R6iYncinRr8XYXE2ja1louIVy9NMZmTNxleSfYnSSEWv5r4oGcw1W','girl@email.com',6,'0'),('admin','$2a$10$NM26BuG.TXFjJNNYqUwP1O02SygWfoTYCqpGmOSMPNWxtl9Ft36ty','admin@email.com',7,'2'),('employee','$2a$10$ON0YQGi4Ze/KzLcHok8lcepqE0TW6z8JpVTNlGjpViNfQONVVeDNK','employee@email.com',8,'1'),('client2','$2a$10$.M/Pih910zOzZSth1Nye9ea1rx3ckMZlY5zY0ZRMmbECsfZoPw1pG','client2@client.com',10,'0');
 /*!40000 ALTER TABLE `user_account` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -815,4 +826,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-12-14 18:08:14
+-- Dump completed on 2018-12-14 23:58:53

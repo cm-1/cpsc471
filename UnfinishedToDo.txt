@@ -1,0 +1,41 @@
+Select upcoming appointment (< all (where ))
+Select missed appointments (ord by...)
+Select your appointments (ord by...)
+	use jade to tell whether or not to create a "book" link
+	Employee needs to create appointments. Use the existing book_appt as a framework for this.
+	
+See a list of patients you are monitoring (complex join)
+
+	
+Calculate survey score, and display it.
+
+View all relevant patient info for ONE thing, at least.
+
+Make sure you can only book an appointment if you have a HCID
+
+List family groups (Employee only)!
+
+Home page change
+
+See MyInfo get updated
+Emergency contacts
+
+Employee creation
+
+Emergency service creation
+
+Incident viewing
+
+Create a survey???
+
+See patient's surveys.
+
+Dr Notes
+
+------
+
+Insert into incident
+
+Booking an appt
+
+contact info working for employee
